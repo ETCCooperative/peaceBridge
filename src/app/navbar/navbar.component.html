@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+    (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse navbar-right" [class.collapse]="isCollapsed" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link" routerLink="/deposit">Deposit</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" routerLink="/transfer">Transfer</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" routerLink="/approve">Approve</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" routerLink="/withdraw">Withdraw</a>
+        </li>
+<!--
+        <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+            <a class="nav-link dropdown-toggle" ngbDropdownToggle id="navbarDropdown3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menu 2
+            </a>
+            <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="navbarDropdown3">
+                <a class="dropdown-item" routerLink="/">Sub menu 1</a>
+                <a class="dropdown-item" routerLink="/">Sub menu 2</a>
+                <a class="dropdown-item" routerLink="/">Sub menu 3</a>
+                <a class="dropdown-item" routerLink="/">Sub menu 4</a>
+            </div>
+        </li>
+
+        <li class="nav-item dropdown" ngbDropdown placement="bottom-right">
+            <a class="nav-link dropdown-toggle"  ngbDropdownToggle id="navbarDropdown1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Menu 3
+            </a>
+            <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="navbarDropdown1">
+                <a class="dropdown-item" routerLink="/">Sub menu 1</a>
+                <a class="dropdown-item" >Sub menu 2</a>
+            </div>
+        </li>
+ -->
+      </ul>
+    </div>
+  </nav>

@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="display-4 text-center">Custodian approve</h1>
+  </div>
+
+
+  <div  *ngIf="errorMessage" class="col-md-12 text-center mt-3">
+    <ngb-alert [type]="'danger'" [dismissible]="false">
+        <strong>Error!</strong> {{errorMessage}}
+    </ngb-alert>
+  </div>
+
+  <div class="col-md-12">
+    <h3 class="text-center">Previous transfers requests</h3>
+    <ul class="list-group transactions">
+      <li *ngFor="let t of transfers" class="list-group-item">
+          <span class="block-number"><b>txHash:</b> {{t.transactionHash}}</span>
+          <span class="block-number"><b>block:</b> {{t.blockNumber}}</span>
+          <span class="from-address"><b>from:</b> 0x{{t.topics[1] | slice:26}}</span>
+          <span class="to-address"><b>to:</b> 0x{{t.topics[2] | slice:26}}</span>
+          <span class="token-id"><b>token id:</b> {{t.topics[3]}}</span>
+          <button (click)="approve(t.transactionHash, t.topics[3])">Approve</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="isApproveFinished" class="col-md-12 mt-3">
+    <p><span><b>custodian approval tx hash:</b> {{apprTxHash}}</span></p>
+</div>
+
+
+<div *ngIf="isLoading" id="loader-spinner" class="load-indicator" >
+  <div class="mid">
+    <h4 *ngIf="loaderMessage!=''">{{loaderMessage}}</h4>
+    <span class="glyphicon glyphicon-refresh fast-right-spinner"></span>
+  </div>
+</div>
+
+
+

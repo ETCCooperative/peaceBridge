@@ -1,0 +1,14 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="jumbotron text-center">
+  <h1 class="nunito-bold">Peace Bridge</h1>
+  <h5>Network: {{ _pbs.newtworkType }}</h5>
+  <h5>Address: {{ _pbs.getAcc() | slice:0:16 }}...</h5>
+</div>
+
+<div id="start-here"  class="container-fluid">
+  <div class="col-lg-8 offset-lg-2">
+    <router-outlet (activate)="activateEvent($event)" (deactivate)="deactivateEvent($event)"></router-outlet>
+  </div>
+</div>
+

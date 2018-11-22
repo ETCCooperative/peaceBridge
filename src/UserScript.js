@@ -153,6 +153,8 @@ async function userTest(_custTokenContractInstance,
                                               withdrawArgs.txLengths,
                                               withdrawArgs.txMsgHashes,
                                               1, _depositContractInstance);
+
+
   }, foreignBlockTimeDelay*5 + homeBlockTimeDelay)
 }
 
@@ -180,6 +182,7 @@ instantiateAndTest()
 transferTxHash = '0x5b4d15a45ff70292c135cbc3fe8c627de04bf8f1394a7955c1770dc0c9bc8555'
 custodianApproveTxHash = '0xed8775b9f0f6e8530de6b035c6a8e7aef7025e1d96386b2f400664a7d7279184'
 withdrawalTxHash = '0xfa10ead8c0fa65d6d31dabbc385f46f3ac07b018dfd366e5c6c31171e34b0330'
+
 
 async function withdrawTest(){
   var rawTransferFrom = await depositHelper.generateRawTxAndMsgHash(transferTxHash,

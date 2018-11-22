@@ -100,6 +100,18 @@ module.exports = {
   withdrawCall: async function(_amt, _to, _tokenId, _rawTxBundle,
                                _txLengths, _txMsgHashes,
                                _declaredNonce, _contractInstance){
+
+    console.log('****** WITHDRAW CALL ******');
+    console.log('amount', _amt);
+    console.log('to', _to);
+    console.log('toked id', _tokenId);
+    console.log('raw tx bundle', _rawTxBundle);
+    console.log('tx lengths', _txLengths);
+    console.log('msg hashes', _txMsgHashes);
+    console.log('declared nonce', _declaredNonce);
+
+
+
      var result = await _contractInstance.withdraw(_to, _tokenId, _rawTxBundle,
                                                    _txLengths, _txMsgHashes,
                                                    _declaredNonce, {value: _amt});
@@ -154,6 +166,9 @@ module.exports = {
       bundleArr[i] = value.rawTx.toString('hex');
       txLengths[i] = value.rawTx.toString('hex').length + 2;
       txMsgHashes[i] = value.msgHash;
+
+      console.log('RAW TX', value.rawTx.toString('hex'));
+      console.log('RAW TX LEN', txLengths[i]);
     })
     var bytes32Bundle = module.exports.txsToBytes32BundleArr(bundleArr);
     return {bytes32Bundle: bytes32Bundle, txLengths: txLengths, txMsgHashes: txMsgHashes};
@@ -175,6 +190,9 @@ module.exports = {
     }
     bytes32Bundle.forEach((value, index) => {
       bytes32Bundle[index] = '0x' + bytes32Bundle[index];
+
+      while (bytes32Bundle[index].length < 66) { bytes32Bundle[index] += '0'; }
+      if (bytes32Bundle[index].length !== 66) { throw new Error('invalid web3 implicit bytes32'); }
     })
     return bytes32Bundle;
   },
@@ -193,10 +211,14 @@ module.exports = {
     txParams.r = await tx['r']//.toString('hex');
     txParams.s = await tx['s']//.toString('hex');
 
+    console.log('TX PARAMS', txParams);
+
     var txRaw = new EthereumTx(txParams)
     const rawTx = txRaw.serialize();
 
     var values = RLP.decode('0x' + rawTx.toString('hex'));
+
+    console.log('***VALUES***', values);
 
     var v = values[6]
     if (v.substr(v.length-1) == 7) {

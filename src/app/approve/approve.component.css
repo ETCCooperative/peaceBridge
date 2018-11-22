@@ -1,0 +1,8 @@
+ul.transactions span{
+  display: block;
+}
+
+/* latest block to the top */
+.list-group {
+  flex-direction: column-reverse;
+}
