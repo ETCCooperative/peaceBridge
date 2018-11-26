@@ -1,7 +1,7 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {PeaceBridgeService} from '../util/peace.bridge.service';
-import { ethers } from 'ethers';
+import { BridgeService, HOME_NTW, FOREIGN_NTW } from '../util/bridge.service';
+import { ethers, Wallet } from 'ethers';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -20,12 +20,14 @@ export class ApproveComponent implements OnInit, OnDestroy {
 
     public isApproveFinished: boolean = false;
 
-    constructor(public _pbs: PeaceBridgeService, private _router: Router, private route: ActivatedRoute) {
+    constructor(public _bs: BridgeService, private _router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
       this.loaderMessage = 'Getting the latest transactions';
       this.isLoading = true;
+
+      this._bs.setCurrentNetwork(FOREIGN_NTW);
       this.getTransfers();
     }
 
@@ -34,14 +36,7 @@ export class ApproveComponent implements OnInit, OnDestroy {
     }
 
     public async getTransfers() {
-
-      if (!this._pbs.ready) {
-        const delay = new Promise(resolve => setTimeout(resolve, 100));
-        await delay;
-        return await this.getTransfers();
-      }
-
-      this.transfers = await this._pbs.getTransferEventsFromTokenContract(0);
+      this.transfers = await this._bs.getTransferEventsFromTokenContract(0);
       console.log('transfers', this.transfers);
       this.isLoading = false;
     }
@@ -55,12 +50,18 @@ export class ApproveComponent implements OnInit, OnDestroy {
 
         try {
 
-          const nonce = await this._pbs.getNonceFromTransferRequest(txHash);
+          const nonce = await this._bs.getNonceFromTransferRequest(txHash);
           console.log('None:::', nonce);
 
           this.loaderMessage = 'Custodian approve call';
-          const custApprTxHash = await this._pbs.custodianApproveCall(tokenId, nonce);
-          console.log('Appr tx hash', custApprTxHash);
+
+          this._bs.setCurrentNetwork(FOREIGN_NTW);
+          const foreignWallet: Wallet = this._bs.getCurrentWallet();
+          const tokenContract = this._bs.getTokenContract();
+
+          const result = await tokenContract.custodianApprove(tokenId, nonce);
+          const custApprTxHash = result.hash;
+          console.log('Transfer approved at tx: ' + custApprTxHash);
 
           this.apprTxHash = custApprTxHash;
           this.isApproveFinished = true;
@@ -72,8 +73,6 @@ export class ApproveComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.errorMessage = 'Transaction error. Isn\'t the transfer approved yet?';
         }
-
-
     }
 
 }

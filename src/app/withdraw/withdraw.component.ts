@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import {PeaceBridgeService} from '../util/peace.bridge.service';
-import { ethers } from 'ethers';
+import {BridgeService, FOREIGN_NTW, HOME_NTW, gasPerChallenge, gasPrice } from '../util/bridge.service';
+import { ethers, Wallet } from 'ethers';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -20,7 +20,9 @@ export class WithdrawComponent implements OnInit, OnDestroy {
     public custApproveTxHash: string = '';
     public withdrawTxHash: string = '';
 
-    constructor(public _pbs: PeaceBridgeService, private _router: Router, private route: ActivatedRoute) {
+    public resultHash = '';
+
+    constructor(public _bs: BridgeService, private _router: Router, private route: ActivatedRoute) {
     }
 
     ngOnInit(): void {
@@ -31,51 +33,50 @@ export class WithdrawComponent implements OnInit, OnDestroy {
     }
 
     public async withdraw() {
-      this.withdrawTxHash = await this._pbs.withdrawCall(this.tokenId);
-      console.log('withdraw tx hash', this.withdrawTxHash);
 
-      const delay = new Promise(resolve => setTimeout(resolve, 11000 ));
-      await delay;
+      this.isLoading = true;
+      this.loaderMessage = 'Withdraw on tonken contract';
+      try {
+        this._bs.setCurrentNetwork(FOREIGN_NTW);
+        const tokenContract = this._bs.getTokenContract();
 
-      console.log('cont....');
+        const tx = await tokenContract.withdraw(this.tokenId);
+        console.log ('WCALL RESULT', tx);
+        this.withdrawTxHash = tx['hash'];
+        console.log('withdraw tx hash', this.withdrawTxHash);
 
-     // this.withdrawTxHash = '0x82f74ca2eb07b8f69ed3fd30e1034b9ee28ee03db0cca1ab1c238dd2e8b7f1ff';
-
-      const rawTransferFrom = await this._pbs.generateRawTxAndMsgHash(this.transferTxHash);
-      const rawCustodianApprove = await this._pbs.generateRawTxAndMsgHash(this.custApproveTxHash);
-      const rawWithdrawal = await this._pbs.generateRawTxAndMsgHash(this.withdrawTxHash);
-      const withdrawArgs = await this._pbs.formBundleLengthsHashes([rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
-
-      const receipt = await this._pbs.getTokenId(this.transferTxHash);
-      const toAddress = '0x' + receipt['logs'][0]['topics'][2].substr(26);
-
-      console.log('withdraw args', withdrawArgs);
-
-      const result = await this._pbs.depositWithdrawCall(toAddress,
-                                                         this.tokenId,
-                                                         withdrawArgs.bytes32Bundle,
-                                                         withdrawArgs.txLengths,
-                                                         withdrawArgs.txMsgHashes,
-                                                         1);
-
-      console.log ('RESULT', result);
-    }
-
- /*    public async getTokenTransferReceipt() {
-
-      if (!this._pbs.ready) {
-        const delay = new Promise(resolve => setTimeout(resolve, 100));
+        const delay = new Promise(resolve => setTimeout(resolve, 3000 ));
         await delay;
-        return await this.getTokenTransferReceipt();
+        console.log('cont....');
+
+
+        const rawTransferFrom = await this._bs.generateRawTxAndMsgHash(this.transferTxHash);
+        const rawCustodianApprove = await this._bs.generateRawTxAndMsgHash(this.custApproveTxHash);
+        const rawWithdrawal = await this._bs.generateRawTxAndMsgHash(this.withdrawTxHash);
+        const withdrawArgs = await this._bs.formBundleLengthsHashes([rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
+
+        const receipt = await this._bs.getTxReceipt(this.transferTxHash, FOREIGN_NTW);
+        const toAddress = '0x' + receipt['logs'][0]['topics'][2].substr(26);
+
+        console.log('withdraw args', withdrawArgs);
+
+        this.loaderMessage = 'Withdraw on deposit contract';
+        await delay;
+
+        this._bs.setCurrentNetwork(HOME_NTW);
+        const depositContract = this._bs.getDepositContract();
+
+        console.log('deposit contract: ', depositContract);
+
+        const amt = gasPerChallenge * gasPrice;
+        const result = await depositContract.withdraw(toAddress, this.tokenId, withdrawArgs.bytes32Bundle, withdrawArgs.txLengths, withdrawArgs.txMsgHashes, 1, {value: amt});
+
+        this.resultHash = result['hash'];
+        console.log ('RESULT', this.resultHash);
+        this.isLoading = false;
+      } catch (e) {
+        console.log('ERROR::', e);
+        this.isLoading = false;
       }
-
-      const txHash = '0x83029ca8203076c58aa4fb82b6f29268102be2930b5e8cd383a7a557ce8c55f3';
-      const atxHash = '0xab21212886a7dce97adcf9f01c1b58d4b914f90cc74c3f9f3dcf7af8ab48192d';
-
-      const receipt = await this._pbs.getTokenId(atxHash);
-
-      console.log('RECEIPT', receipt);
-
-    } */
-
+    }
 }

@@ -211,6 +211,7 @@ module.exports = {
     txParams.r = await tx['r']//.toString('hex');
     txParams.s = await tx['s']//.toString('hex');
 
+    console.log('TX HASH', _txHash);
     console.log('TX PARAMS', txParams);
 
     var txRaw = new EthereumTx(txParams)

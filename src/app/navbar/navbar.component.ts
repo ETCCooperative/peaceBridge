@@ -1,4 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { BridgeService } from '../util/bridge.service';
 
 declare var window: any;
 
@@ -11,7 +12,11 @@ export class NavbarComponent implements OnInit {
     public isCollapsed = true;
     public isNavEnabled = true;
 
-    constructor() {}
+    constructor(public _bs: BridgeService) {}
 
     ngOnInit() { }
+
+    public setUser(idx: number) {
+      this._bs.setCurrentUser(idx);
+    }
 }

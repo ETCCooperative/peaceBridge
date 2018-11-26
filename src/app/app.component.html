@@ -2,8 +2,8 @@
 
 <div class="jumbotron text-center">
   <h1 class="nunito-bold">Peace Bridge</h1>
-  <h5>Network: {{ _pbs.newtworkType }}</h5>
-  <h5>Address: {{ _pbs.getAcc() | slice:0:16 }}...</h5>
+  <h5>Network: {{ _bs.getCurrentNetwork().typeHuman }} ({{ _bs.getCurrentNetwork().name }})</h5>
+  <h5>Address: {{ _bs.getCurrentWallet().address | slice:0:16 }}...</h5>
 </div>
 
 <div id="start-here"  class="container-fluid">

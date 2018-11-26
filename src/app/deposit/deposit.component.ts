@@ -1,12 +1,9 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
-import {PeaceBridgeService} from '../util/peace.bridge.service';
-import { ethers } from 'ethers';
+import { ethers, Wallet } from 'ethers';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { BridgeService, FOREIGN_NTW, HOME_NTW } from '../util/bridge.service';
 /* import { Subscription } from 'rxjs/Subscription'; */
-
-const foreignPublicAddr2: String = '0x942BbcCde96bEc073e1DCfc50bc661c21a674d63';
-
 
 @Component({
   selector: 'app-deposit',
@@ -28,48 +25,51 @@ export class DepositComponent implements OnInit {
     public transactionHash: string = '';
 
 
-    constructor(public _pbs: PeaceBridgeService, private _router: Router) {}
+    constructor(public _bs: BridgeService, private _router: Router) {}
 
     ngOnInit(): void {
       // this.getContractInstance();
     }
 
     public async deposit() {
-      if (this._pbs.tokenContractInstance !== null) {
+      this.mintedTokenId = '';
+      this.transactionHash = '';
 
-        this.mintedTokenId = '';
-        this.transactionHash = '';
+      this.loaderMessage = 'Minting in progress';
+      this.isLoading = true;
 
-        this.loaderMessage = 'Minting in progress';
-        this.isLoading = true;
-        const _this = this;
-        const result = await this._pbs.tokenContractInstance.mint(this.amountToDeposit, '0x0A2926f2E2C9d60AEBf5Cfe0911FbdeFCE47Db5E');
-        console.log('tx result', result);
+      // setup
+      this._bs.setCurrentNetwork(FOREIGN_NTW);
+      const foreignWallet: Wallet = this._bs.getCurrentWallet();
+      const tokenContract = this._bs.getTokenContract();
 
-        this.loaderMessage = 'Wainting for tx receipt';
-        const tokenId = await this.getTokenId(result.hash);
-        console.log('token id', tokenId);
+      const result = await tokenContract.mint(this.amountToDeposit, foreignWallet.address);
+      console.log('tx result', result);
 
-        this.loaderMessage = 'Depositing in progress';
-        const depositResult = await this._pbs.depositContractInstance.deposit(tokenId, '0x0A2926f2E2C9d60AEBf5Cfe0911FbdeFCE47Db5E', {value: ethers.utils.hexlify(Number(this.amountToDeposit))});
+      this.loaderMessage = 'Wainting for tx receipt';
+      const tokenId = await this.getTokenId(result.hash);
+      console.log('token id', tokenId);
 
-        console.log('deposit result', depositResult);
-        console.log('deposit hash', depositResult.hash);
 
-        this.mintedTokenId = tokenId;
-        this.transactionHash = depositResult.hash;
+      this._bs.setCurrentNetwork(HOME_NTW);
+      const homeWallet: Wallet = this._bs.getCurrentWallet();
+      const depositContract = this._bs.getDepositContract();
 
-        this.isMintingFinished = true;
+      this.loaderMessage = 'Depositing in progress';
+      const depositResult = await depositContract.deposit(tokenId, homeWallet.address, {value: ethers.utils.hexlify(Number(this.amountToDeposit))});
+      console.log('deposit result', depositResult);
+      console.log('deposit hash', depositResult.hash);
 
-        this.isLoading = false;
+      this.mintedTokenId = tokenId;
+      this.transactionHash = depositResult.hash;
+      this.isMintingFinished = true;
 
-      } else {
-        console.log ('ERROR. No token contract.');
-      }
+      this._bs.setCurrentNetwork(FOREIGN_NTW);
+      this.isLoading = false;
     }
 
     private async getTokenId(hash: any) {
-      const receipt = await this._pbs.getTokenId(hash);
+      const receipt = await this._bs.getTxReceipt(hash, FOREIGN_NTW);
       if (receipt === null) {
         const delay = new Promise(resolve => setTimeout(resolve, 300));
         await delay;

@@ -1,7 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
 import { views } from './app-nav-views';
-import { PeaceBridgeService } from './util/peace.bridge.service';
+import { BridgeService } from './util/bridge.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +12,7 @@ import { PeaceBridgeService } from './util/peace.bridge.service';
 export class AppComponent {
   views = views;
 
-  constructor(public _pbs: PeaceBridgeService) { }
+  constructor(public _bs: BridgeService) { }
 
   activateEvent(event) {
     if (ENV === 'development') {

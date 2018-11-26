@@ -25,6 +25,10 @@
         <button type="submit" class="btn btn-primary" (click)="withdraw()" [disabled]="tok.errors || ttxhash.errors || custapptxhash.errors">Initiate withdraw</button>
     </div>
 
+    <div *ngIf="resultHash != ''" class="col-md-12 mt-3">
+        <p><b>tx hash:</b> <a href="https://ropsten.etherscan.io/tx/{{resultHash}}">{{resultHash}}</a></p>
+      </div>
+
 
 
   <div  *ngIf="errorMessage" class="col-md-12 text-center mt-3">

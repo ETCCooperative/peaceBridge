@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PeaceBridgeService} from './peace.bridge.service';
+import { BridgeService } from './bridge.service';
 
 @NgModule({
   imports: [
     CommonModule
   ],
   providers: [
-    PeaceBridgeService
+    BridgeService
   ],
   declarations: []
 })
