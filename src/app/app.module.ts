@@ -25,6 +25,7 @@ import { DepositModule } from './deposit/deposit.module';
 import { TransferModule } from './transfer/transfer.module';
 import { ApproveModule } from './approve/approve.module';
 import { WithdrawModule } from './withdraw/withdraw.module';
+import { ClaimModule } from './claim/claim.module';
 
 
 
@@ -44,6 +45,7 @@ import { WithdrawModule } from './withdraw/withdraw.module';
     TransferModule,
     ApproveModule,
     WithdrawModule,
+    ClaimModule,
     RouterModule.forRoot(routes, { useHash: false, preloadingStrategy: PreloadAllModules }),
   ],
   bootstrap: [AppComponent],

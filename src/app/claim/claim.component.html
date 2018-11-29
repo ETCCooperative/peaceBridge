@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col-md-12">
+    <h1 class="display-4 text-center">Claim</h1>
+  </div>
+  <div class="col-md-12 mt-3">
+    <div class="form-group mt-3">
+      <label for="depositAmount">Token Id</label>
+      <input type="text" class="form-control" id="depositAmount" name="depositAmount" placeholder="Token Id" [(ngModel)]="tokenId">
+    </div>
+    <div class="mt-4 text-center">
+      <button class="btn btn-success" (click)="claim()">Claim</button>
+    </div>
+  </div>
+
+  <div *ngIf="transactionHash" class="col-md-12 mt-3">
+    <p><span><b>tx hash:</b> <a href="https://ropsten.etherscan.io/tx/{{transactionHash}}">{{transactionHash}}</a></span></p>
+  </div>
+
+</div>
+
+<div *ngIf="isLoading" id="loader-spinner" class="load-indicator" >
+  <div class="mid">
+    <h4 *ngIf="loaderMessage!=''">{{loaderMessage}}</h4>
+    <span class="glyphicon glyphicon-refresh fast-right-spinner"></span>
+  </div>
+</div>

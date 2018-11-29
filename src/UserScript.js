@@ -146,14 +146,14 @@ async function userTest(_custTokenContractInstance,
                                                                     web3ForeignProvider)
     var withdrawArgs = await depositHelper.formBundleLengthsHashes([rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
 
-   /*  result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
+    result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
                                               homePublicAddr2,
                                               tokenId,
                                               withdrawArgs.bytes32Bundle,
                                               withdrawArgs.txLengths,
                                               withdrawArgs.txMsgHashes,
                                               1, _depositContractInstance);
- */
+
 
   }, foreignBlockTimeDelay*5 + homeBlockTimeDelay)
 }

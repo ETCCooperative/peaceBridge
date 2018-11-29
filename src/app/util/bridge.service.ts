@@ -79,7 +79,7 @@ export class BridgeService {
         pkey: '0x546a0806a2d0240d50797f7f7b0120a6af0d6e8bfa5b4620365f5e8af9eb6fe7'
       },
       {
-        name: 'C.Charlie',
+        name: 'Custodian',
         pkey: '0x13410a539b4fdb8dabde37ff8d687cc23eea64ab11eaf348a2fd775ba71a31cc'
       }
   ];
@@ -173,7 +173,7 @@ export class BridgeService {
   }
 
   public async getTransferEventsFromTokenContract(startBlock?: number) {
-    console.log('FING');
+
     if (!startBlock) {
       const lastBlock = await this.foreignProvider.getBlockNumber();
       startBlock = lastBlock - queryRange;
@@ -195,7 +195,6 @@ export class BridgeService {
 
   public async generateRawTxAndMsgHash (_txHash) {
 
-    console.log('fing');
     const tx = await this.web3.eth.getTransaction(_txHash);
     console.log('lavina');
 
