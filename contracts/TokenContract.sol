@@ -1,5 +1,5 @@
-
-pragma solidity ^0.4.24;
+// pragma solidity ^0.4.24;
+pragma solidity ^0.4.19; //for Ethereum Classic
 
 import "./dependencies/SafeMath.sol";
 import "./dependencies/Ownable.sol";
