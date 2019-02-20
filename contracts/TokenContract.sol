@@ -96,13 +96,14 @@ contract TokenContract is ERC721BasicToken {
                            .concat(uint256ToBytes(_declaredNonce)));
     custodianApproval[approvalHash] = _to;
     //TODO: increase transferNonce in custodianApprove instead?
-    transferNonce[_tokenId] += 1;
+    // transferNonce[_tokenId] += 1;
     emit TransferRequest(_from, _to, _tokenId, _declaredNonce, approvalHash);
   }
 
   function custodianApprove(uint256 _tokenId, uint256 _declaredNonce)
   onlyCustodian public {
     require(exists(_tokenId));
+    transferNonce[_tokenId] += 1;
     bytes32 approvalHash = keccak256(uint256ToBytes(_tokenId)
                            .concat(uint256ToBytes(_declaredNonce)));
     address _to = custodianApproval[approvalHash];
