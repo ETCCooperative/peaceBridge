@@ -95,6 +95,7 @@ contract TokenContract is ERC721BasicToken {
     bytes32 approvalHash = keccak256(uint256ToBytes(_tokenId)
                            .concat(uint256ToBytes(_declaredNonce)));
     custodianApproval[approvalHash] = _to;
+    //TODO: increase transferNonce in custodianApprove instead?
     transferNonce[_tokenId] += 1;
     emit TransferRequest(_from, _to, _tokenId, _declaredNonce, approvalHash);
   }
