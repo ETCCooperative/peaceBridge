@@ -3,3 +3,4 @@ private.json
 .DS_Store
 .vscode
 datest.log
+.secret

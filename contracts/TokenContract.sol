@@ -37,7 +37,8 @@ contract TokenContract is ERC721BasicToken {
              address indexed depositedTo,
              uint256 mintNonce,
              uint256 tokenId);
-  event Withdraw(uint256 tokenId);
+  event Withdraw(uint256 indexed tokenId,
+                 address indexed withdrawer);
   event TransferRequest(address indexed from,
                         address indexed to,
                         uint256 indexed tokenId,
@@ -60,7 +61,7 @@ contract TokenContract is ERC721BasicToken {
   }
 
   function withdraw(uint256 _tokenId) public {
-    emit Withdraw(_tokenId);
+    emit Withdraw(_tokenId, msg.sender);
     //USED TO ANNOUNCE A WITHDRAWL (DOESNT NECESSISTATE SUBMISSION)
   }
 

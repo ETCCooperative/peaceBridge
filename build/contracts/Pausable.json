@@ -62,8 +62,8 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061039d806100536000396000f30060806040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363a599a41461007257806375f12b211461008957806386d1a69f146100b85780638da5cb5b146100cf578063f2fde38b14610126575b600080fd5b34801561007e57600080fd5b50610087610169565b005b34801561009557600080fd5b5061009e6101dc565b604051808215151515815260200191505060405180910390f35b3480156100c457600080fd5b506100cd6101ef565b005b3480156100db57600080fd5b506100e461027c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013257600080fd5b50610167600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506102a1565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156101da576001600060146101000a81548160ff0219169083151502179055505b565b600060149054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561027a57600060149054906101000a900460ff16151561025f57600080fd5b60008060146101000a81548160ff0219169083151502179055505b565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561036e57600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151561036d57806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505b5b505600a165627a7a7230582037ea44b84666916c50467b87d48b6723dd97c5f15cc9b205fb94f4b83c54b8e00029",
-  "deployedBytecode": "0x60806040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363a599a41461007257806375f12b211461008957806386d1a69f146100b85780638da5cb5b146100cf578063f2fde38b14610126575b600080fd5b34801561007e57600080fd5b50610087610169565b005b34801561009557600080fd5b5061009e6101dc565b604051808215151515815260200191505060405180910390f35b3480156100c457600080fd5b506100cd6101ef565b005b3480156100db57600080fd5b506100e461027c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013257600080fd5b50610167600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506102a1565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156101da576001600060146101000a81548160ff0219169083151502179055505b565b600060149054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561027a57600060149054906101000a900460ff16151561025f57600080fd5b60008060146101000a81548160ff0219169083151502179055505b565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561036e57600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151561036d57806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505b5b505600a165627a7a7230582037ea44b84666916c50467b87d48b6723dd97c5f15cc9b205fb94f4b83c54b8e00029",
+  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555061039d806100536000396000f30060806040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363a599a41461007257806375f12b211461008957806386d1a69f146100b85780638da5cb5b146100cf578063f2fde38b14610126575b600080fd5b34801561007e57600080fd5b50610087610169565b005b34801561009557600080fd5b5061009e6101dc565b604051808215151515815260200191505060405180910390f35b3480156100c457600080fd5b506100cd6101ef565b005b3480156100db57600080fd5b506100e461027c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013257600080fd5b50610167600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506102a1565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156101da576001600060146101000a81548160ff0219169083151502179055505b565b600060149054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561027a57600060149054906101000a900460ff16151561025f57600080fd5b60008060146101000a81548160ff0219169083151502179055505b565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561036e57600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151561036d57806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505b5b505600a165627a7a7230582039a095cb683be303f8c2afaf371928d7cf5f239f2b3663bbea2bb545d4f9b2eb0029",
+  "deployedBytecode": "0x60806040526004361061006d576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806363a599a41461007257806375f12b211461008957806386d1a69f146100b85780638da5cb5b146100cf578063f2fde38b14610126575b600080fd5b34801561007e57600080fd5b50610087610169565b005b34801561009557600080fd5b5061009e6101dc565b604051808215151515815260200191505060405180910390f35b3480156100c457600080fd5b506100cd6101ef565b005b3480156100db57600080fd5b506100e461027c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561013257600080fd5b50610167600480360381019080803573ffffffffffffffffffffffffffffffffffffffff1690602001909291905050506102a1565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614156101da576001600060146101000a81548160ff0219169083151502179055505b565b600060149054906101000a900460ff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561027a57600060149054906101000a900460ff16151561025f57600080fd5b60008060146101000a81548160ff0219169083151502179055505b565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff16141561036e57600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614151561036d57806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505b5b505600a165627a7a7230582039a095cb683be303f8c2afaf371928d7cf5f239f2b3663bbea2bb545d4f9b2eb0029",
   "sourceMap": "159:506:9:-;;;104:10:8;96:5;;:18;;;;;;;;;;;;;;;;;;159:506:9;;;;;;",
   "deployedSourceMap": "159:506:9:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;439:69;;8:9:-1;5:2;;;30:1;27;20:12;5:2;439:69:9;;;;;;192:19;;8:9:-1;5:2;;;30:1;27;20:12;5:2;192:19:9;;;;;;;;;;;;;;;;;;;;;;;;;;;582:80;;8:9:-1;5:2;;;30:1;27;20:12;5:2;582:80:9;;;;;;46:20:8;;8:9:-1;5:2;;;30:1;27;20:12;5:2;46:20:8;;;;;;;;;;;;;;;;;;;;;;;;;;;191:110;;8:9:-1;5:2;;;30:1;27;20:12;5:2;191:110:8;;;;;;;;;;;;;;;;;;;;;;;;;;;;439:69:9;168:5:8;;;;;;;;;;;154:19;;:10;:19;;;150:32;;;499:4:9;489:7;;:14;;;;;;;;;;;;;;;;;;150:32:8;439:69:9:o;192:19::-;;;;;;;;;;;;;:::o;582:80::-;168:5:8;;;;;;;;;;;154:19;;:10;:19;;;150:32;;;333:7:9;;;;;;;;;;;332:8;328:34;;;350:5;;;328:34;652:5;642:7;;:15;;;;;;;;;;;;;;;;;;150:32:8;582:80:9:o;46:20:8:-;;;;;;;;;;;;;:::o;191:110::-;168:5;;;;;;;;;;;154:19;;:10;:19;;;150:32;;;276:1;256:22;;:8;:22;;;;252:44;;;288:8;280:5;;:16;;;;;;;;;;;;;;;;;;252:44;150:32;191:110;:::o",
   "source": "pragma solidity ^0.4.8;\n\n\nimport \"./Ownable.sol\";\n\n\n/*\n * Pausable\n * Abstract contract that allows children to implement an\n * emergency stop mechanism.\n */\n\ncontract Pausable is Ownable {\n  bool public stopped;\n\n  modifier stopInEmergency {\n    if (stopped) {\n      throw;\n    }\n    _;\n  }\n  \n  modifier onlyInEmergency {\n    if (!stopped) {\n      throw;\n    }\n    _;\n  }\n\n  // called by the owner on emergency, triggers stopped state\n  function emergencyStop() external onlyOwner {\n    stopped = true;\n  }\n\n  // called by the owner on end of emergency, returns to normal state\n  function release() external onlyOwner onlyInEmergency {\n    stopped = false;\n  }\n\n}",
@@ -72,14 +72,14 @@
     "absolutePath": "/home/yingtong/peacebridge/contracts/dependencies/Pausable.sol",
     "exportedSymbols": {
       "Pausable": [
-        3083
+        3087
       ]
     },
-    "id": 3084,
+    "id": 3088,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3038,
+        "id": 3042,
         "literals": [
           "solidity",
           "^",
@@ -92,10 +92,10 @@
       {
         "absolutePath": "/home/yingtong/peacebridge/contracts/dependencies/Ownable.sol",
         "file": "./Ownable.sol",
-        "id": 3039,
+        "id": 3043,
         "nodeType": "ImportDirective",
-        "scope": 3084,
-        "sourceUnit": 3037,
+        "scope": 3088,
+        "sourceUnit": 3041,
         "src": "26:23:9",
         "symbolAliases": [],
         "unitAlias": ""
@@ -106,41 +106,41 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 3040,
+              "id": 3044,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3036,
+              "referencedDeclaration": 3040,
               "src": "180:7:9",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$3036",
+                "typeIdentifier": "t_contract$_Ownable_$3040",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 3041,
+            "id": 3045,
             "nodeType": "InheritanceSpecifier",
             "src": "180:7:9"
           }
         ],
         "contractDependencies": [
-          3036
+          3040
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3083,
+        "id": 3087,
         "linearizedBaseContracts": [
-          3083,
-          3036
+          3087,
+          3040
         ],
         "name": "Pausable",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 3043,
+            "id": 3047,
             "name": "stopped",
             "nodeType": "VariableDeclaration",
-            "scope": 3083,
+            "scope": 3087,
             "src": "192:19:9",
             "stateVariable": true,
             "storageLocation": "default",
@@ -149,7 +149,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 3042,
+              "id": 3046,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "192:4:9",
@@ -163,18 +163,18 @@
           },
           {
             "body": {
-              "id": 3050,
+              "id": 3054,
               "nodeType": "Block",
               "src": "241:50:9",
               "statements": [
                 {
                   "condition": {
                     "argumentTypes": null,
-                    "id": 3045,
+                    "id": 3049,
                     "name": "stopped",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 3043,
+                    "referencedDeclaration": 3047,
                     "src": "251:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -182,16 +182,16 @@
                     }
                   },
                   "falseBody": null,
-                  "id": 3048,
+                  "id": 3052,
                   "nodeType": "IfStatement",
                   "src": "247:33:9",
                   "trueBody": {
-                    "id": 3047,
+                    "id": 3051,
                     "nodeType": "Block",
                     "src": "260:20:9",
                     "statements": [
                       {
-                        "id": 3046,
+                        "id": 3050,
                         "nodeType": "Throw",
                         "src": "268:5:9"
                       }
@@ -199,18 +199,18 @@
                   }
                 },
                 {
-                  "id": 3049,
+                  "id": 3053,
                   "nodeType": "PlaceholderStatement",
                   "src": "285:1:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3051,
+            "id": 3055,
             "name": "stopInEmergency",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 3044,
+              "id": 3048,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "241:0:9"
@@ -220,14 +220,14 @@
           },
           {
             "body": {
-              "id": 3059,
+              "id": 3063,
               "nodeType": "Block",
               "src": "322:51:9",
               "statements": [
                 {
                   "condition": {
                     "argumentTypes": null,
-                    "id": 3054,
+                    "id": 3058,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -238,11 +238,11 @@
                     "src": "332:8:9",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 3053,
+                      "id": 3057,
                       "name": "stopped",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3043,
+                      "referencedDeclaration": 3047,
                       "src": "333:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -255,16 +255,16 @@
                     }
                   },
                   "falseBody": null,
-                  "id": 3057,
+                  "id": 3061,
                   "nodeType": "IfStatement",
                   "src": "328:34:9",
                   "trueBody": {
-                    "id": 3056,
+                    "id": 3060,
                     "nodeType": "Block",
                     "src": "342:20:9",
                     "statements": [
                       {
-                        "id": 3055,
+                        "id": 3059,
                         "nodeType": "Throw",
                         "src": "350:5:9"
                       }
@@ -272,18 +272,18 @@
                   }
                 },
                 {
-                  "id": 3058,
+                  "id": 3062,
                   "nodeType": "PlaceholderStatement",
                   "src": "367:1:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3060,
+            "id": 3064,
             "name": "onlyInEmergency",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 3052,
+              "id": 3056,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "322:0:9"
@@ -293,25 +293,25 @@
           },
           {
             "body": {
-              "id": 3069,
+              "id": 3073,
               "nodeType": "Block",
               "src": "483:25:9",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 3067,
+                    "id": 3071,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 3065,
+                      "id": 3069,
                       "name": "stopped",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3043,
+                      "referencedDeclaration": 3047,
                       "src": "489:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -323,7 +323,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 3066,
+                      "id": 3070,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -344,28 +344,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 3068,
+                  "id": 3072,
                   "nodeType": "ExpressionStatement",
                   "src": "489:14:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3070,
+            "id": 3074,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 3063,
+                "id": 3067,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 3062,
+                  "id": 3066,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3017,
+                  "referencedDeclaration": 3021,
                   "src": "473:9:9",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -379,19 +379,19 @@
             "name": "emergencyStop",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3061,
+              "id": 3065,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "461:2:9"
             },
             "payable": false,
             "returnParameters": {
-              "id": 3064,
+              "id": 3068,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "483:0:9"
             },
-            "scope": 3083,
+            "scope": 3087,
             "src": "439:69:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -399,25 +399,25 @@
           },
           {
             "body": {
-              "id": 3081,
+              "id": 3085,
               "nodeType": "Block",
               "src": "636:26:9",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 3079,
+                    "id": 3083,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 3077,
+                      "id": 3081,
                       "name": "stopped",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3043,
+                      "referencedDeclaration": 3047,
                       "src": "642:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -429,7 +429,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 3078,
+                      "id": 3082,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -450,28 +450,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 3080,
+                  "id": 3084,
                   "nodeType": "ExpressionStatement",
                   "src": "642:15:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3082,
+            "id": 3086,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 3073,
+                "id": 3077,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 3072,
+                  "id": 3076,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3017,
+                  "referencedDeclaration": 3021,
                   "src": "610:9:9",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -483,14 +483,14 @@
               },
               {
                 "arguments": null,
-                "id": 3075,
+                "id": 3079,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 3074,
+                  "id": 3078,
                   "name": "onlyInEmergency",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3060,
+                  "referencedDeclaration": 3064,
                   "src": "620:15:9",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -504,26 +504,26 @@
             "name": "release",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3071,
+              "id": 3075,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "598:2:9"
             },
             "payable": false,
             "returnParameters": {
-              "id": 3076,
+              "id": 3080,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "636:0:9"
             },
-            "scope": 3083,
+            "scope": 3087,
             "src": "582:80:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 3084,
+        "scope": 3088,
         "src": "159:506:9"
       }
     ],
@@ -533,14 +533,14 @@
     "absolutePath": "/home/yingtong/peacebridge/contracts/dependencies/Pausable.sol",
     "exportedSymbols": {
       "Pausable": [
-        3083
+        3087
       ]
     },
-    "id": 3084,
+    "id": 3088,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 3038,
+        "id": 3042,
         "literals": [
           "solidity",
           "^",
@@ -553,10 +553,10 @@
       {
         "absolutePath": "/home/yingtong/peacebridge/contracts/dependencies/Ownable.sol",
         "file": "./Ownable.sol",
-        "id": 3039,
+        "id": 3043,
         "nodeType": "ImportDirective",
-        "scope": 3084,
-        "sourceUnit": 3037,
+        "scope": 3088,
+        "sourceUnit": 3041,
         "src": "26:23:9",
         "symbolAliases": [],
         "unitAlias": ""
@@ -567,41 +567,41 @@
             "arguments": null,
             "baseName": {
               "contractScope": null,
-              "id": 3040,
+              "id": 3044,
               "name": "Ownable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3036,
+              "referencedDeclaration": 3040,
               "src": "180:7:9",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Ownable_$3036",
+                "typeIdentifier": "t_contract$_Ownable_$3040",
                 "typeString": "contract Ownable"
               }
             },
-            "id": 3041,
+            "id": 3045,
             "nodeType": "InheritanceSpecifier",
             "src": "180:7:9"
           }
         ],
         "contractDependencies": [
-          3036
+          3040
         ],
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 3083,
+        "id": 3087,
         "linearizedBaseContracts": [
-          3083,
-          3036
+          3087,
+          3040
         ],
         "name": "Pausable",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "constant": false,
-            "id": 3043,
+            "id": 3047,
             "name": "stopped",
             "nodeType": "VariableDeclaration",
-            "scope": 3083,
+            "scope": 3087,
             "src": "192:19:9",
             "stateVariable": true,
             "storageLocation": "default",
@@ -610,7 +610,7 @@
               "typeString": "bool"
             },
             "typeName": {
-              "id": 3042,
+              "id": 3046,
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "192:4:9",
@@ -624,18 +624,18 @@
           },
           {
             "body": {
-              "id": 3050,
+              "id": 3054,
               "nodeType": "Block",
               "src": "241:50:9",
               "statements": [
                 {
                   "condition": {
                     "argumentTypes": null,
-                    "id": 3045,
+                    "id": 3049,
                     "name": "stopped",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
-                    "referencedDeclaration": 3043,
+                    "referencedDeclaration": 3047,
                     "src": "251:7:9",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
@@ -643,16 +643,16 @@
                     }
                   },
                   "falseBody": null,
-                  "id": 3048,
+                  "id": 3052,
                   "nodeType": "IfStatement",
                   "src": "247:33:9",
                   "trueBody": {
-                    "id": 3047,
+                    "id": 3051,
                     "nodeType": "Block",
                     "src": "260:20:9",
                     "statements": [
                       {
-                        "id": 3046,
+                        "id": 3050,
                         "nodeType": "Throw",
                         "src": "268:5:9"
                       }
@@ -660,18 +660,18 @@
                   }
                 },
                 {
-                  "id": 3049,
+                  "id": 3053,
                   "nodeType": "PlaceholderStatement",
                   "src": "285:1:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3051,
+            "id": 3055,
             "name": "stopInEmergency",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 3044,
+              "id": 3048,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "241:0:9"
@@ -681,14 +681,14 @@
           },
           {
             "body": {
-              "id": 3059,
+              "id": 3063,
               "nodeType": "Block",
               "src": "322:51:9",
               "statements": [
                 {
                   "condition": {
                     "argumentTypes": null,
-                    "id": 3054,
+                    "id": 3058,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -699,11 +699,11 @@
                     "src": "332:8:9",
                     "subExpression": {
                       "argumentTypes": null,
-                      "id": 3053,
+                      "id": 3057,
                       "name": "stopped",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3043,
+                      "referencedDeclaration": 3047,
                       "src": "333:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -716,16 +716,16 @@
                     }
                   },
                   "falseBody": null,
-                  "id": 3057,
+                  "id": 3061,
                   "nodeType": "IfStatement",
                   "src": "328:34:9",
                   "trueBody": {
-                    "id": 3056,
+                    "id": 3060,
                     "nodeType": "Block",
                     "src": "342:20:9",
                     "statements": [
                       {
-                        "id": 3055,
+                        "id": 3059,
                         "nodeType": "Throw",
                         "src": "350:5:9"
                       }
@@ -733,18 +733,18 @@
                   }
                 },
                 {
-                  "id": 3058,
+                  "id": 3062,
                   "nodeType": "PlaceholderStatement",
                   "src": "367:1:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3060,
+            "id": 3064,
             "name": "onlyInEmergency",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 3052,
+              "id": 3056,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "322:0:9"
@@ -754,25 +754,25 @@
           },
           {
             "body": {
-              "id": 3069,
+              "id": 3073,
               "nodeType": "Block",
               "src": "483:25:9",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 3067,
+                    "id": 3071,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 3065,
+                      "id": 3069,
                       "name": "stopped",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3043,
+                      "referencedDeclaration": 3047,
                       "src": "489:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -784,7 +784,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 3066,
+                      "id": 3070,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -805,28 +805,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 3068,
+                  "id": 3072,
                   "nodeType": "ExpressionStatement",
                   "src": "489:14:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3070,
+            "id": 3074,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 3063,
+                "id": 3067,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 3062,
+                  "id": 3066,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3017,
+                  "referencedDeclaration": 3021,
                   "src": "473:9:9",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -840,19 +840,19 @@
             "name": "emergencyStop",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3061,
+              "id": 3065,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "461:2:9"
             },
             "payable": false,
             "returnParameters": {
-              "id": 3064,
+              "id": 3068,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "483:0:9"
             },
-            "scope": 3083,
+            "scope": 3087,
             "src": "439:69:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -860,25 +860,25 @@
           },
           {
             "body": {
-              "id": 3081,
+              "id": 3085,
               "nodeType": "Block",
               "src": "636:26:9",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 3079,
+                    "id": 3083,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "argumentTypes": null,
-                      "id": 3077,
+                      "id": 3081,
                       "name": "stopped",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 3043,
+                      "referencedDeclaration": 3047,
                       "src": "642:7:9",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bool",
@@ -890,7 +890,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "66616c7365",
-                      "id": 3078,
+                      "id": 3082,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -911,28 +911,28 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 3080,
+                  "id": 3084,
                   "nodeType": "ExpressionStatement",
                   "src": "642:15:9"
                 }
               ]
             },
             "documentation": null,
-            "id": 3082,
+            "id": 3086,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
             "modifiers": [
               {
                 "arguments": null,
-                "id": 3073,
+                "id": 3077,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 3072,
+                  "id": 3076,
                   "name": "onlyOwner",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3017,
+                  "referencedDeclaration": 3021,
                   "src": "610:9:9",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -944,14 +944,14 @@
               },
               {
                 "arguments": null,
-                "id": 3075,
+                "id": 3079,
                 "modifierName": {
                   "argumentTypes": null,
-                  "id": 3074,
+                  "id": 3078,
                   "name": "onlyInEmergency",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 3060,
+                  "referencedDeclaration": 3064,
                   "src": "620:15:9",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -965,26 +965,26 @@
             "name": "release",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 3071,
+              "id": 3075,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "598:2:9"
             },
             "payable": false,
             "returnParameters": {
-              "id": 3076,
+              "id": 3080,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "636:0:9"
             },
-            "scope": 3083,
+            "scope": 3087,
             "src": "582:80:9",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "external"
           }
         ],
-        "scope": 3084,
+        "scope": 3088,
         "src": "159:506:9"
       }
     ],
@@ -995,6 +995,12 @@
     "version": "0.4.24+commit.e67f0147.Emscripten.clang"
   },
   "networks": {},
-  "schemaVersion": "2.0.1",
-  "updatedAt": "2019-02-25T09:02:23.747Z"
+  "schemaVersion": "3.0.2",
+  "updatedAt": "2019-03-27T11:01:47.458Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
 }
