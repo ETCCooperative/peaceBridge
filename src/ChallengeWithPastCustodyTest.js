@@ -31,6 +31,9 @@ var foreignPublicAddr2 = '0x942BbcCde96bEc073e1DCfc50bc661c21a674d63';
 var foreignPrivateKey3 = '0x0A90E10DDCEF51B9AD063518F90E2F4'+
                          'E6B8BF12C2B6B4359BF2310AA597898FC';
 var foreignPublicAddr3 = '0xcE152b33c48be6e0c5876b057334eA01c8deC0e5';
+var foreignPrivateKey4 = '0xE385AE71E6E6AD26DF4B1DE6DAA61CD' +
+                         'A687ADCB5CDD373EAE7EA078BB2E0B2D8';
+var foreignPublicAddr4 = '0xA75250C4622F1124D087cBB35FAc3d03A87aB3D8';
 var foreignBlockTimeDelay = 55000;
 
 var homeNetwork = 'ropsten'; //'rinkeby', 'ropsten', 'kovan', 'homestead'
@@ -42,6 +45,8 @@ var homePrivateKey2 = foreignPrivateKey2;
 var homePublicAddr2 = foreignPublicAddr2;
 var homePrivateKey3 = foreignPrivateKey3;
 var homePublicAddr3 = foreignPublicAddr3;
+var homePrivateKey4 = foreignPrivateKey4;
+var homePublicAddr4 = foreignPublicAddr4;
 var homeBlockTimeDelay = 55000;
 
 var gasPerChallenge = 206250;
@@ -63,9 +68,11 @@ var custHomeWallet = new ethers.Wallet(homeCustPrivateKey, homeProvider);
 var foreignWallet = new ethers.Wallet(foreignPrivateKey, foreignProvider);
 var foreignWallet2 = new ethers.Wallet(foreignPrivateKey2, foreignProvider);
 var foreignWallet3 = new ethers.Wallet(foreignPrivateKey3, foreignProvider);
+var foreignWallet4 = new ethers.Wallet(foreignPrivateKey4, foreignProvider);
 var homeWallet = new ethers.Wallet(homePrivateKey, homeProvider);
 var homeWallet2 = new ethers.Wallet(homePrivateKey2, homeProvider);
 var homeWallet3 = new ethers.Wallet(homePrivateKey3, homeProvider);
+var homeWallet4 = new ethers.Wallet(homePrivateKey4, homeProvider);
 
 //------------------------------------------------------------------------------
 //Get contract ABIs
@@ -139,22 +146,51 @@ async function challengeWithPastCustodyTest(
                 nonce, _custTokenContractInstance);
     }, foreignBlockTimeDelay*3 + homeBlockTimeDelay)
 
-    // //5. Bob makes a transfer to Charlie on TokenContract
-    // setTimeout(async function() {
-    // transferTxHash2 = await tokenHelper.transferCall(
-    //     foreignPublicAddr2, foreignPublicAddr3, tokenId, 1, _tokenContractInstance2);
-    // }, foreignBlockTimeDelay*4 + homeBlockTimeDelay)
 
-    // //6. Custodian approves transfer on TokenContract
-    // setTimeout(async function() {
-    //     nonce2 = await tokenHelper.getNonceFromTransferRequest(
-    //         transferTxHash2, foreignProvider);
-    // }, foreignBlockTimeDelay*5 + homeBlockTimeDelay)
+    //5. Bob makes a transfer to Charlie on TokenContract
+    setTimeout(async function() {
+    transferTxHash2 = await tokenHelper.transferCall(
+        foreignPublicAddr2, foreignPublicAddr3, tokenId, 1, _tokenContractInstance2);
+    }, foreignBlockTimeDelay*4 + homeBlockTimeDelay)
+
+    //6. Custodian approves transfer on TokenContract
+    setTimeout(async function() {
+        nonce2 = await tokenHelper.getNonceFromTransferRequest(
+            transferTxHash2, foreignProvider);
+    }, foreignBlockTimeDelay*5 + homeBlockTimeDelay)
     
-    // setTimeout(async function() {
-    // custodianApproveTxHash2 = await tokenHelper.custodianApproveCall(
-    //     tokenId, nonce2, _custTokenContractInstance);
-    // }, foreignBlockTimeDelay*6 + homeBlockTimeDelay)
+    setTimeout(async function() {
+    custodianApproveTxHash2 = await tokenHelper.custodianApproveCall(
+        tokenId, nonce2, _custTokenContractInstance);
+    }, foreignBlockTimeDelay*6 + homeBlockTimeDelay)
+
+    //7. Bob colludes with Custodian to create fradulent future transfer
+    //   and withdrawal
+    // FUTURE FRAUDULENT TRANSFER
+    setTimeout(async function() {
+        var rawTransferFrom = await generateRawTxAndMsgHash(
+            foreignPublicAddr2,
+            foreignPrivateKey2,
+            tokenContractAddr,
+            0,
+            tokenContract.transferFrom.request(
+                accounts[6], 
+                accounts[7], 
+                tokenId.toString(), 4).params[0].data
+        )
+        var rawCustodianApprove = await generateRawTxAndMsgHash(
+            accounts[1],
+            privKeys[1],
+            tokenContract.address,
+            0,
+            tokenContract.custodianApprove.request(
+                tokenId.toString(), 4).params[0].data
+        )
+    }, foreignBlockTimeDelay*6 + homeBlockTimeDelay)
+
+
+
+
 
     //7. Bob withdraws fraudulently
     setTimeout(async function(){
