@@ -1,12 +1,10 @@
 
-// this script tests fraudulent transactions and challenges on the peaceBridge
+// this script tests challengeWithFutureCustody on the peaceBridge
 
 //------------------------------------------------------------------------------
 //Require dependencies
 var ethers = require('ethers');
-var utils = require('ethers').utils;
 var Web3 = require("web3");
-var EthereumTx = require('ethereumjs-tx');
 var fs = require('fs');
 var solc = require('solc');
 
@@ -61,10 +59,13 @@ var homeProvider = new ethers.providers.InfuraProvider(
     network = homeNetwork, apiAccessToken = infuraAPI);
 
 var custForeignWallet = new ethers.Wallet(foreignCustPrivateKey, foreignProvider);
+var custHomeWallet = new ethers.Wallet(homeCustPrivateKey, homeProvider);
 var foreignWallet = new ethers.Wallet(foreignPrivateKey, foreignProvider);
 var foreignWallet2 = new ethers.Wallet(foreignPrivateKey2, foreignProvider);
+var foreignWallet3 = new ethers.Wallet(foreignPrivateKey3, foreignProvider);
 var homeWallet = new ethers.Wallet(homePrivateKey, homeProvider);
-
+var homeWallet2 = new ethers.Wallet(homePrivateKey2, homeProvider);
+var homeWallet3 = new ethers.Wallet(homePrivateKey3, homeProvider);
 
 //------------------------------------------------------------------------------
 //Get contract ABIs
@@ -94,9 +95,8 @@ var tokenContractInput = {
 
 async function challengeWithFutureCustodyTest(
     _custTokenContractInstance,
-    _tokenContractInstance,
-    _tokenContractInstance2,
-    _depositContractInstance){
+    _tokenContractInstance,  _tokenContractInstance2, _tokenContractInstance3,
+    _depositContractInstance, _depositContractInstance2, _depositContractInstance3){
 
     var tokenId;
     var transferTxHash;
@@ -106,6 +106,7 @@ async function challengeWithFutureCustodyTest(
     var withdrawalTxHash;
     var nonce;
     var nonce2;
+    var challengeHash;
 
     //1. Alice mints on TokenContract
     var mintTxHash = await tokenHelper.mintCall(10000,
@@ -148,7 +149,7 @@ async function challengeWithFutureCustodyTest(
     setTimeout(async function() {
         nonce2 = await tokenHelper.getNonceFromTransferRequest(
             transferTxHash2, foreignProvider);
-        }, foreignBlockTimeDelay*5 + homeBlockTimeDelay)
+    }, foreignBlockTimeDelay*5 + homeBlockTimeDelay)
     
     setTimeout(async function() {
     custodianApproveTxHash2 = await tokenHelper.custodianApproveCall(
@@ -170,19 +171,33 @@ async function challengeWithFutureCustodyTest(
         withdrawalTxHash, web3ForeignProvider)
     var withdrawArgs = await depositHelper.formBundleLengthsHashes(
         [rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
+    
     result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
-                            homePublicAddr3,
+                            homePublicAddr2,
                             tokenId,
                             withdrawArgs.bytes32Bundle,
                             withdrawArgs.txLengths,
                             withdrawArgs.txMsgHashes,
-                            1, _depositContractInstance);
+                            1, _depositContractInstance2);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay)
 
-    //8. Bob claims on DepositContract
-
-
     //8. Charlie challenges using challengeWithFutureCustody
+    setTimeout(async function() {
+    var rawTransferFrom = await depositHelper.generateRawTxAndMsgHash(
+        transferTxHash2, web3ForeignProvider)
+    var rawCustodianApprove = await depositHelper.generateRawTxAndMsgHash(
+        custodianApproveTxHash2, web3ForeignProvider)
+    var withdrawArgs = await depositHelper.formBundleLengthsHashes(
+        [rawTransferFrom, rawCustodianApprove]);
+    challengeHash = await depositHelper.challengeWithFutureCustodyCall(
+        homePublicAddr3,
+        tokenId, 
+        withdrawArgs.bytes32Bundle,
+        withdrawArgs.txLengths,
+        withdrawArgs.txMsgHashes,
+        _depositContractInstance3);
+    }, foreignBlockTimeDelay*9 + homeBlockTimeDelay)
+
 
 }
 
@@ -196,10 +211,18 @@ async function instantiateAndTest(){
         tokenContractAddr, tokenContractAbi, foreignWallet);
     var tokenContract2 = await tokenHelper.instantiateContract(
         tokenContractAddr, tokenContractAbi, foreignWallet2);
+    var tokenContract3 = await tokenHelper.instantiateContract(
+        tokenContractAddr, tokenContractAbi, foreignWallet3);
     var depositContract = await depositHelper.instantiateContract(
         depositContractAddr, depositContractAbi, homeWallet);
+    var depositContract2 = await depositHelper.instantiateContract(
+        depositContractAddr, depositContractAbi, homeWallet2);
+    var depositContract3 = await depositHelper.instantiateContract(
+        depositContractAddr, depositContractAbi, homeWallet3);
     await challengeWithFutureCustodyTest(
-        custTokenContract, tokenContract, tokenContract2, depositContract)
+        custTokenContract, 
+        tokenContract, tokenContract2, tokenContract3,
+        depositContract, depositContract2, depositContract3)
   }
   
   instantiateAndTest()

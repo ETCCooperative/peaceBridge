@@ -6,13 +6,8 @@ This script provides helper functions for testing DepositContract.sol
 //------------------------------------------------------------------------------
 //Require dependencies
 var ethers = require('ethers');
-var utils = require('ethers').utils;
 var EthereumTx = require('ethereumjs-tx');
-var ethJsUtils = require('ethereumjs-util');
-var fs = require('fs');
-var solc = require('solc');
-var fs = require('fs');
-var solc = require('solc');
+
 // var RLP = require('rlp');
 var RLP = require("eth-lib/lib/rlp");
 var Bytes = require("eth-lib/lib/bytes");
@@ -107,6 +102,30 @@ module.exports = {
      await console.log('withdraw() txHash: ' + txHash);
      return txHash;
   },
+
+  challengeWithFutureCustodyCall: async function(
+    _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes, _contractInstance
+  ){
+    var result = await _contractInstance.challengeWithFutureCustody(
+      _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes
+    )
+    var txHash = await module.exports.getTxHash(result);
+    await console.log('challengeWithFutureCustody() txHash: ' + txHash);
+    return txHash;
+  },
+
+  initiateChallengeWithPastCustodyCall: async function(
+    _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes, _contractInstance
+  ){
+    var result = await _contractInstance.initiateChallengeWithPastCustody(
+      _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes
+    )
+    var txHash = await module.exports.getTxHash(result);
+    await console.log('challengeWithFutureCustody() txHash: ' + txHash);
+    return txHash; 
+  },
+
+  // utils
 
   formBundleLengthsHashes: function(rawTxArr) {
     console.log("rawTxArr: ", rawTxArr);
