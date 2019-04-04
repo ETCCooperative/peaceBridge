@@ -8,6 +8,7 @@ var Web3 = require("web3");
 var fs = require('fs');
 var solc = require('solc');
 
+
 const depositHelper = require('./DepositHelper.js');
 const tokenHelper = require('./TokenHelper.js');
 
@@ -54,8 +55,8 @@ var gasPrice = 10000000000;
 
 //------------------------------------------------------------------------------
 //Set wallets and providers
-// var web3ForeignProvider = new Web3(new Web3.providers.HttpProvider("https://" +
-//                                    foreignNetwork + ".infura.io/" + infuraAPI));
+var web3ForeignProvider = new Web3(new Web3.providers.HttpProvider("https://" +
+                                   foreignNetwork + ".infura.io/" + infuraAPI));
 var web3HomeProvider = new Web3(new Web3.providers.HttpProvider("https://" +
                                    homeNetwork + ".infura.io/" + infuraAPI));
 var foreignProvider = new ethers.providers.InfuraProvider(
@@ -97,13 +98,20 @@ var tokenContractInput = {
  const depositContractAbi = JSON.parse(depositContractOutput.contracts[
                             'DepositContract_flat.sol:DepositContract'].interface);
 
+var web3TokenContractInstance = new web3ForeignProvider.eth.Contract(tokenContractAbi, tokenContractAddr)
+var web3DepositContractInstance = new web3HomeProvider.eth.Contract(depositContractAbi, depositContractAddr)
+
 //------------------------------------------------------------------------------
 //Interacting with contract instances
 
+
 async function challengeWithPastCustodyTest(
     _custTokenContractInstance,
-    _tokenContractInstance,  _tokenContractInstance2, _tokenContractInstance3,
-    _depositContractInstance, _depositContractInstance2, _depositContractInstance3){
+    _tokenContractInstance,  _tokenContractInstance2, 
+    _tokenContractInstance3, _tokenContractInstance4,
+    _depositContractInstance, _depositContractInstance2, 
+    _depositContractInstance3, _depositContractInstance4
+){
 
     var tokenId;
     var transferTxHash;
@@ -123,10 +131,8 @@ async function challengeWithPastCustodyTest(
     //2. Alice deposits on DepositContract
     setTimeout(async function() {
     tokenId = await tokenHelper.getTokenIdFromMint(mintTxHash, foreignProvider);
-    var depositTxHash = await depositHelper.depositCall(10000,
-                                        tokenId,
-                                        foreignPublicAddr,
-                                        _depositContractInstance);
+    var depositTxHash = await depositHelper.depositCall(
+        10000,tokenId,foreignPublicAddr,_depositContractInstance);
     }, foreignBlockTimeDelay)
 
     //3. Alice makes a transfer to Bob on TokenContract
@@ -146,7 +152,6 @@ async function challengeWithPastCustodyTest(
                 nonce, _custTokenContractInstance);
     }, foreignBlockTimeDelay*3 + homeBlockTimeDelay)
 
-
     //5. Bob makes a transfer to Charlie on TokenContract
     setTimeout(async function() {
     transferTxHash2 = await tokenHelper.transferCall(
@@ -164,78 +169,71 @@ async function challengeWithPastCustodyTest(
         tokenId, nonce2, _custTokenContractInstance);
     }, foreignBlockTimeDelay*6 + homeBlockTimeDelay)
 
-    //7. Bob colludes with Custodian to create fradulent future transfer
-    //   and withdrawal
-    // FUTURE FRAUDULENT TRANSFER
+    //7. Eve fraudulently withdraws on TokenContract 
     setTimeout(async function() {
-        var rawTransferFrom = await generateRawTxAndMsgHash(
-            foreignPublicAddr2,
-            foreignPrivateKey2,
-            tokenContractAddr,
-            0,
-            tokenContract.transferFrom.request(
-                accounts[6], 
-                accounts[7], 
-                tokenId.toString(), 4).params[0].data
-        )
-        var rawCustodianApprove = await generateRawTxAndMsgHash(
-            accounts[1],
-            privKeys[1],
-            tokenContract.address,
-            0,
-            tokenContract.custodianApprove.request(
-                tokenId.toString(), 4).params[0].data
-        )
-    }, foreignBlockTimeDelay*6 + homeBlockTimeDelay)
-
-
-
-
-
-    //7. Bob withdraws fraudulently
-    setTimeout(async function(){
-    withdrawalTxHash = await tokenHelper.withdrawCall(
-        tokenId, _tokenContractInstance2)
+        withdrawalTxHash = await tokenHelper.withdrawCall(
+            tokenId, _tokenContractInstance4)
     }, foreignBlockTimeDelay*7 + homeBlockTimeDelay)
 
-    setTimeout(async function(){
-    var rawTransferFrom = await depositHelper.generateRawTxAndMsgHash(
-        transferTxHash, web3HomeProvider)
-    var rawCustodianApprove = await depositHelper.generateRawTxAndMsgHash(
-        custodianApproveTxHash, web3HomeProvider)
-    var rawWithdrawal = await depositHelper.generateRawTxAndMsgHash(
-        withdrawalTxHash, web3HomeProvider)
-    var withdrawArgs = await depositHelper.formBundleLengthsHashes(
-        [rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
-    
-    // result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
-    //                         homePublicAddr2,
-    //                         tokenId,
-    //                         withdrawArgs.bytes32Bundle,
-    //                         withdrawArgs.txLengths,
-    //                         withdrawArgs.txMsgHashes,
-    //                         1, _depositContractInstance2);
+    //8. (offline) Bob and Custodian create fake offline future transfer to Eve at nonce 4 
+    setTimeout(async function() {
+        var rawWithdrawal = await tokenHelper.recreateRawTxAndMsgHash(
+            withdrawalTxHash, web3ForeignProvider)
+        // fake future transfer tx at nonce 4
+        transferData = await web3TokenContractInstance.methods.transferFrom(
+            foreignPublicAddr2, foreignPublicAddr4,tokenId, 4
+        ).encodeABI();
+        var rawTransferFrom = await tokenHelper.generateRawTxAndMsgHash(
+            foreignPublicAddr2, foreignPrivateKey2,
+            tokenContractAddr, 0, transferData, web3ForeignProvider
+        )
+        // fake future approve tx at nonce 4
+        var custodianApproveData = await web3TokenContractInstance.methods.custodianApprove(
+            tokenId, 4
+        ).encodeABI();
+        var rawCustodianApprove = await tokenHelper.generateRawTxAndMsgHash(
+            foreignCustPublicAddr, foreignCustPrivateKey,
+            tokenContractAddr, 0, custodianApproveData, web3ForeignProvider
+        )
+
+        var withdrawArgs = await tokenHelper.formBundleLengthsHashes(
+            [rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
+
+        
+        result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
+                                homePublicAddr2,
+                                tokenId,
+                                withdrawArgs.bytes32Bundle,
+                                withdrawArgs.txLengths,
+                                withdrawArgs.txMsgHashes,
+                                4, _depositContractInstance4);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay)
 
-    // //8. Charlie challenges using challengeWithFutureCustody
-    // setTimeout(async function() {
-    // var rawTransferFrom = await depositHelper.generateRawTxAndMsgHash(
-    //     transferTxHash2, web3HomeProvider)
-    // var rawCustodianApprove = await depositHelper.generateRawTxAndMsgHash(
-    //     custodianApproveTxHash2, web3HomeProvider)
-    // var withdrawArgs = await depositHelper.formBundleLengthsHashes(
-    //     [rawTransferFrom, rawCustodianApprove]);
-    // challengeHash = await depositHelper.challengeWithFutureCustodyCall(
-    //     homePublicAddr3,
-    //     tokenId, 
-    //     withdrawArgs.bytes32Bundle,
-    //     withdrawArgs.txLengths,
-    //     withdrawArgs.txMsgHashes,
-    //     _depositContractInstance3);
-    // }, foreignBlockTimeDelay*9 + homeBlockTimeDelay)
+
+    //9. Charlie challenges using initiateChallengeWithPastCustody
+    setTimeout(async function() {
+    var rawTransferFrom = await depositHelper.recreateRawTxAndMsgHash(
+        transferTxHash2, web3ForeignProvider)
+    var rawCustodianApprove = await depositHelper.recreateRawTxAndMsgHash(
+        custodianApproveTxHash2, web3ForeignProvider)
+    var withdrawArgs = await depositHelper.formBundleLengthsHashes(
+        [rawTransferFrom, rawCustodianApprove]);
+    challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
+        gasPerChallenge*gasPrice*5,
+        homePublicAddr3,
+        tokenId, 
+        withdrawArgs.bytes32Bundle,
+        withdrawArgs.txLengths,
+        withdrawArgs.txMsgHashes,
+        _depositContractInstance3);
+    }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*2)
 
 
 }
+
+
+
+
 
 //------------------------------------------------------------------------------
 //Run tests
@@ -249,16 +247,23 @@ async function instantiateAndTest(){
         tokenContractAddr, tokenContractAbi, foreignWallet2);
     var tokenContract3 = await tokenHelper.instantiateContract(
         tokenContractAddr, tokenContractAbi, foreignWallet3);
+    var tokenContract4 = await tokenHelper.instantiateContract(
+        tokenContractAddr, tokenContractAbi, foreignWallet4);
     var depositContract = await depositHelper.instantiateContract(
         depositContractAddr, depositContractAbi, homeWallet);
     var depositContract2 = await depositHelper.instantiateContract(
         depositContractAddr, depositContractAbi, homeWallet2);
     var depositContract3 = await depositHelper.instantiateContract(
         depositContractAddr, depositContractAbi, homeWallet3);
+    var depositContract4 = await depositHelper.instantiateContract(
+        depositContractAddr, depositContractAbi, homeWallet4);
+
+
     await challengeWithPastCustodyTest(
         custTokenContract, 
-        tokenContract, tokenContract2, tokenContract3,
-        depositContract, depositContract2, depositContract3)
+        tokenContract, tokenContract2, tokenContract3, tokenContract4,
+        depositContract, depositContract2, depositContract3, depositContract4
+    )
   }
   
   instantiateAndTest()

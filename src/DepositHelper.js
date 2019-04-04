@@ -115,13 +115,14 @@ module.exports = {
   },
 
   initiateChallengeWithPastCustodyCall: async function(
+    _amt,
     _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes, _contractInstance
   ){
     var result = await _contractInstance.initiateChallengeWithPastCustody(
-      _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes
+      _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes, {value: _amt}
     )
     var txHash = await module.exports.getTxHash(result);
-    await console.log('challengeWithFutureCustody() txHash: ' + txHash);
+    await console.log('initiateChallengeWithPastCustody() txHash: ' + txHash);
     return txHash; 
   },
 
@@ -198,7 +199,37 @@ module.exports = {
     return bytes32Bundle;
   },
 
-  generateRawTxAndMsgHash: async function(_txHash, _web3Provider) {
+  generateRawTxAndMsgHash: async function(
+    pubK, privK, to, value, data, web3Provider
+  ){
+    if (privK.substring(0,1) == "0x"){
+      privK = privK.slice(2)
+    }    
+
+    var txParams = {};
+    txParams.nonce = await web3Provider.eth.getTransactionCount(pubK);
+    txParams.gasPrice = web3Provider.utils.toHex(500);
+    txParams.gasLimit = web3Provider.utils.toHex(6721975);
+    txParams.to = to;
+    txParams.value = web3Provider.utils.toHex(value);
+    txParams.data = data;
+    var tx = new EthereumTx(txParams)
+    tx.sign(new Buffer.from(privK, 'hex'));
+    const rawTx = tx.serialize();
+
+    //Form msgHash
+    var decoded = RLP.decode('0x' + rawTx.toString('hex'));
+    var txArrParams = []
+    for (var i = 0; i < 6; i ++) {
+      txArrParams.push('0x' + decoded[i].toString('hex'));
+    }
+    var msgHash = web3Provider.utils.sha3('0x' + RLP.encode(txArrParams).toString('hex'));
+
+    return {rawTx: rawTx, msgHash: msgHash};
+  },
+
+
+  recreateRawTxAndMsgHash: async function(_txHash, _web3Provider) {
     var txParams = {};
     var tx = await _web3Provider.eth.getTransaction(_txHash);
     txParams.nonce = await _web3Provider.utils.toHex(tx['nonce']);
@@ -235,7 +266,7 @@ module.exports = {
     txParams2.value = values[4];
     // txParams.value = _web3Provider.utils.toHex(0x0)
     txParams2.data = values[5];
-    txParams2.v = v;
+    txParams2.v = v-27;
     txParams2.r = values[7];
     txParams2.s = values[8];
 
