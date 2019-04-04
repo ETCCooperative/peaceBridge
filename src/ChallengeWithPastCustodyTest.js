@@ -8,7 +8,7 @@ var Web3 = require("web3");
 var fs = require('fs');
 var solc = require('solc');
 
-
+const helper = require('./Helper.js');
 const depositHelper = require('./DepositHelper.js');
 const tokenHelper = require('./TokenHelper.js');
 
@@ -177,13 +177,13 @@ async function challengeWithPastCustodyTest(
 
     //8. (offline) Bob and Custodian create fake offline future transfer to Eve at nonce 4 
     setTimeout(async function() {
-        var rawWithdrawal = await tokenHelper.recreateRawTxAndMsgHash(
+        var rawWithdrawal = await helper.recreateRawTxAndMsgHash(
             withdrawalTxHash, web3ForeignProvider)
         // fake future transfer tx at nonce 4
         transferData = await web3TokenContractInstance.methods.transferFrom(
             foreignPublicAddr2, foreignPublicAddr4,tokenId, 4
         ).encodeABI();
-        var rawTransferFrom = await tokenHelper.generateRawTxAndMsgHash(
+        var rawTransferFrom = await helper.generateRawTxAndMsgHash(
             foreignPublicAddr2, foreignPrivateKey2,
             tokenContractAddr, 0, transferData, web3ForeignProvider
         )
@@ -191,12 +191,12 @@ async function challengeWithPastCustodyTest(
         var custodianApproveData = await web3TokenContractInstance.methods.custodianApprove(
             tokenId, 4
         ).encodeABI();
-        var rawCustodianApprove = await tokenHelper.generateRawTxAndMsgHash(
+        var rawCustodianApprove = await helper.generateRawTxAndMsgHash(
             foreignCustPublicAddr, foreignCustPrivateKey,
             tokenContractAddr, 0, custodianApproveData, web3ForeignProvider
         )
 
-        var withdrawArgs = await tokenHelper.formBundleLengthsHashes(
+        var withdrawArgs = await helper.formBundleLengthsHashes(
             [rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
 
         
@@ -206,17 +206,17 @@ async function challengeWithPastCustodyTest(
                                 withdrawArgs.bytes32Bundle,
                                 withdrawArgs.txLengths,
                                 withdrawArgs.txMsgHashes,
-                                4, _depositContractInstance4);
+                                5, _depositContractInstance4);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay)
 
 
     //9. Charlie challenges using initiateChallengeWithPastCustody
     setTimeout(async function() {
-    var rawTransferFrom = await depositHelper.recreateRawTxAndMsgHash(
+    var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
         transferTxHash2, web3ForeignProvider)
-    var rawCustodianApprove = await depositHelper.recreateRawTxAndMsgHash(
+    var rawCustodianApprove = await helper.recreateRawTxAndMsgHash(
         custodianApproveTxHash2, web3ForeignProvider)
-    var withdrawArgs = await depositHelper.formBundleLengthsHashes(
+    var withdrawArgs = await helper.formBundleLengthsHashes(
         [rawTransferFrom, rawCustodianApprove]);
     challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
         gasPerChallenge*gasPrice*5,

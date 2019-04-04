@@ -163,13 +163,13 @@ async function challengeWithFutureCustodyTest(
     }, foreignBlockTimeDelay*7 + homeBlockTimeDelay)
 
     setTimeout(async function(){
-    var rawTransferFrom = await tokenHelper.recreateRawTxAndMsgHash(
+    var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
         transferTxHash, web3ForeignProvider)
-    var rawCustodianApprove = await tokenHelper.recreateRawTxAndMsgHash(
+    var rawCustodianApprove = await helper.recreateRawTxAndMsgHash(
         custodianApproveTxHash, web3ForeignProvider)
-    var rawWithdrawal = await tokenHelper.recreateRawTxAndMsgHash(
+    var rawWithdrawal = await helper.recreateRawTxAndMsgHash(
         withdrawalTxHash, web3ForeignProvider)
-    var withdrawArgs = await tokenHelper.formBundleLengthsHashes(
+    var withdrawArgs = await helper.formBundleLengthsHashes(
         [rawWithdrawal, rawTransferFrom, rawCustodianApprove]);
     
     result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
@@ -183,11 +183,11 @@ async function challengeWithFutureCustodyTest(
 
     //8. Charlie challenges using challengeWithFutureCustody
     setTimeout(async function() {
-    var rawTransferFrom = await tokenHelper.recreateRawTxAndMsgHash(
+    var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
         transferTxHash2, web3ForeignProvider)
-    var rawCustodianApprove = await tokenHelper.recreateRawTxAndMsgHash(
+    var rawCustodianApprove = await helper.recreateRawTxAndMsgHash(
         custodianApproveTxHash2, web3ForeignProvider)
-    var withdrawArgs = await depositHelper.formBundleLengthsHashes(
+    var withdrawArgs = await helper.formBundleLengthsHashes(
         [rawTransferFrom, rawCustodianApprove]);
     challengeHash = await depositHelper.challengeWithFutureCustodyCall(
         homePublicAddr3,
