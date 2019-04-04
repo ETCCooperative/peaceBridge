@@ -82,32 +82,68 @@ formBundleLengthsHashes: function(rawTxArr) {
   },
 
   generateRawTxAndMsgHash: async function(
-    pubK, privK, to, value, data, web3Provider
+    pubK, privK, to, value, data, _web3Provider
   ){
     if (privK.substring(0,2) == "0x"){
       privK = privK.slice(2)
     }    
 
     var txParams = {};
-    txParams.nonce = await web3Provider.eth.getTransactionCount(pubK);
-    txParams.gasPrice = web3Provider.utils.toHex(500);
-    txParams.gasLimit = web3Provider.utils.toHex(6721975);
+    txParams.nonce = await _web3Provider.eth.getTransactionCount(pubK);
+    txParams.gasPrice = _web3Provider.utils.toHex(500);
+    txParams.gasLimit = _web3Provider.utils.toHex(6721975);
     txParams.to = to;
-    txParams.value = web3Provider.utils.toHex(value);
+    txParams.value = _web3Provider.utils.toHex(value);
     txParams.data = data;
+    // console.log("data: ", data)
     var tx = new EthereumTx(txParams)
     tx.sign(new Buffer.from(privK, 'hex'));
     const rawTx = tx.serialize();
 
-    //Form msgHash
-    var decoded = RLP.decode('0x' + rawTx.toString('hex'));
-    var txArrParams = []
-    for (var i = 0; i < 6; i ++) {
-      txArrParams.push('0x' + decoded[i].toString('hex'));
-    }
-    var msgHash = web3Provider.utils.sha3('0x' + RLP.encode(txArrParams).toString('hex'));
+    var values = RLP.decode('0x' + rawTx.toString('hex'));
 
-    return {rawTx: rawTx, msgHash: msgHash};
+    var v = values[6]
+    if (v.substr(v.length-1) == 7) {
+      v = '0x1b'
+    }
+    if (v.substr(v.length-1) == 8) {
+      v = '0x1c'
+    }
+    var r = values[7]
+    var s = values[8]
+
+    var txParams2 = {};
+    txParams2.nonce = values[0];
+    txParams2.gasPrice = values[1];
+    txParams2.gasLimit = values[2];
+    txParams2.to = values[3];
+    txParams2.value = values[4];
+    // txParams.value = _web3Provider.utils.toHex(0x0)
+    txParams2.data = values[5];
+    txParams2.v = v;
+    // txParams2.v = v-27;
+    txParams2.r = values[7];
+    txParams2.s = values[8];
+
+    var txRaw2 = new EthereumTx(txParams2)
+    const rawTx2 = txRaw2.serialize();
+
+    //Form msgHash
+    var signature = Account.encodeSignature(values.slice(6,9));
+    var recovery = Bytes.toNumber(values[6]);
+    var extraData = recovery < 35 ? [] : [Bytes.fromNumber((recovery - 35) >> 1), "0x", "0x"];
+    var signingData = values.slice(0,6).concat(extraData);
+    var signingDataHex = RLP.encode(signingData);
+
+    var msgHash = Hash.keccak256(signingDataHex)
+
+    console.log('v: ', v)
+    console.log('r: ', r)
+    console.log('s: ', s)
+
+    console.log(_web3Provider.eth.accounts.recover(msgHash, v, r, s, true))
+
+    return {rawTx: rawTx2, msgHash: msgHash};
   },
 
   recreateRawTxAndMsgHash: async function(_txHash, _web3Provider) {
@@ -120,6 +156,7 @@ formBundleLengthsHashes: function(rawTxArr) {
     txParams.value = await _web3Provider.utils.toHex(tx['value']);
     // txParams.value = _web3Provider.utils.toHex(0x0)
     txParams.data = await tx['input'];
+    // console.log("data:", txParams.data)
     txParams.v = await tx['v']//.toString('hex');
     txParams.r = await tx['r']//.toString('hex');
     txParams.s = await tx['s']//.toString('hex');

@@ -116,6 +116,7 @@ async function challengeWithPastCustodyTest(
     var tokenId;
     var transferTxHash;
     var transferTxHash2;
+    var transferTxHash3;
     var custodianApproveTxHash;
     var custodianApproveTxHash2;
     var withdrawalTxHash;
@@ -175,12 +176,13 @@ async function challengeWithPastCustodyTest(
             tokenId, _tokenContractInstance4)
     }, foreignBlockTimeDelay*7 + homeBlockTimeDelay)
 
-    //8. (offline) Bob and Custodian create fake offline future transfer to Eve at nonce 4 
+    //8. (offline) Bob and Custodian create fake offline future transfer to Deirdre at nonce 4 
     setTimeout(async function() {
         var rawWithdrawal = await helper.recreateRawTxAndMsgHash(
             withdrawalTxHash, web3ForeignProvider)
+
         // fake future transfer tx at nonce 4
-        transferData = await web3TokenContractInstance.methods.transferFrom(
+        var transferData = await web3TokenContractInstance.methods.transferFrom(
             foreignPublicAddr2, foreignPublicAddr4,tokenId, 4
         ).encodeABI();
         var rawTransferFrom = await helper.generateRawTxAndMsgHash(
@@ -201,7 +203,7 @@ async function challengeWithPastCustodyTest(
 
         
         result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
-                                homePublicAddr2,
+                                homePublicAddr4,
                                 tokenId,
                                 withdrawArgs.bytes32Bundle,
                                 withdrawArgs.txLengths,
@@ -219,7 +221,7 @@ async function challengeWithPastCustodyTest(
     var withdrawArgs = await helper.formBundleLengthsHashes(
         [rawTransferFrom, rawCustodianApprove]);
     challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
-        gasPerChallenge*gasPrice*5,
+        gasPerChallenge*gasPrice*10,
         homePublicAddr3,
         tokenId, 
         withdrawArgs.bytes32Bundle,
@@ -228,6 +230,12 @@ async function challengeWithPastCustodyTest(
         _depositContractInstance3);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*2)
 
+
+    // //10. Charlie transfers token to Deirdre
+    // setTimeout(async function() {
+    //     transferTxHash2 = await tokenHelper.transferCall(
+    //         foreignPublicAddr3, foreignPublicAddr4, tokenId, 2, _tokenContractInstance3);
+    // }, foreignBlockTimeDelay*9 + homeBlockTimeDelay*2)
 
 }
 
@@ -257,7 +265,6 @@ async function instantiateAndTest(){
         depositContractAddr, depositContractAbi, homeWallet3);
     var depositContract4 = await depositHelper.instantiateContract(
         depositContractAddr, depositContractAbi, homeWallet4);
-
 
     await challengeWithPastCustodyTest(
         custTokenContract, 

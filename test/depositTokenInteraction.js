@@ -278,7 +278,10 @@ contract('Deposit-Token Contract Interactions', async (accounts) => {
       privKeys[6],
       tokenContract.address,
       0,
-      tokenContract.transferFrom.request(accounts[6], accounts[7], tokenId.toString(), 4).params[0].data
+      tokenContract.transferFrom.request(
+        accounts[6], 
+        accounts[7], 
+        tokenId.toString(), 4).params[0].data
     )
     var rawCustodianApprove2 = await generateRawTxAndMsgHash(
       accounts[1],
@@ -299,7 +302,10 @@ contract('Deposit-Token Contract Interactions', async (accounts) => {
 
     //STARTING FRAUDULENT CHALLENGE
     var withdrawArgs = formBundleLengthsHashes([rawWithdrawal, rawTransferFrom2, rawCustodianApprove2]);
-    result = await depositContract.withdraw(accounts[8], tokenId, withdrawArgs.bytes32Bundle, withdrawArgs.txLengths, withdrawArgs.txMsgHashes, 5, {gasPrice: gasPrice, value:stakeValue * 5});
+    result = await depositContract.withdraw(
+      accounts[8], tokenId, withdrawArgs.bytes32Bundle, 
+      withdrawArgs.txLengths, withdrawArgs.txMsgHashes, 
+      5, {gasPrice: gasPrice, value:stakeValue * 5});
 
     var challengeArgs = formBundleLengthsHashes([rawTransferFrom, rawCustodianApprove]);
     result = await depositContract.initiateChallengeWithPastCustody(accounts[5], tokenId, challengeArgs.bytes32Bundle, challengeArgs.txLengths, challengeArgs.txMsgHashes, {gasPrice: gasPrice, value:stakeValue});
