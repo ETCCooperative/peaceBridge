@@ -14,7 +14,7 @@ const tokenHelper = require('./TokenHelper.js');
 //------------------------------------------------------------------------------
 //Set parameters
 const tokenContractAddr = '0x20dD16A7CFb58b1a61a79CC0FD014342e75C16c7';
-const depositContractAddr = '0x3bAfA5b729259E29dD5969A4ad83582a1c998F29';
+const depositContractAddr = '0x5d6190c0f74b1f29814c9b7e1efd7412e784fd93';
 
 const infuraAPI = '9744d40b99e34a57850802d4c6433ab8';
 

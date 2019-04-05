@@ -333,40 +333,34 @@ contract DepositContract {
     // splits bundle into individual rawTxs
     bytes[] rawTxList;
     splitTxBundle(_rawTxBundle, _txLengths, rawTxList);
-
-    RLP.RLPItem[] memory transferTx = rawTxList[0].toRLPItem().toList();
-    RLP.RLPItem[] memory custodianTx = rawTxList[1].toRLPItem().toList();
-
-    checkTransferTxAndCustodianTx(transferTx, custodianTx, _txMsgHashes[1]);
-    require(challengeAddressClaim[_tokenId] ==
-            parseData(transferTx[5].toData(), 1).toAddress(12),
-            "token needs to be transfered from last proven custody");
-    require(_tokenId == parseData(transferTx[5].toData(), 3).toUint(0),
-            "needs to refer to the same tokenId");
-
-    _to.send(challengeStake[_tokenId]);
-    resetChallenge(_tokenId);
     // //get rid of loops
     // for (uint i = 0; i < _txLengths.length; i +=2) {
     //   RLP.RLPItem[] memory transferTx = rawTxList[i].toRLPItem().toList();
     //   RLP.RLPItem[] memory custodianTx = rawTxList[i + 1].toRLPItem().toList();
-
     //   checkTransferTxAndCustodianTx(transferTx, custodianTx, _txMsgHashes[i+1]);
-    //   //TODO: save on require statement by not including _tokenId in arguments
-    //   require(_tokenId == parseData(transferTx[5].toData(), 3).toUint(0),
-    //           "needs to refer to the same tokenId");
-    //   require(tokenIdToMinter[_tokenId] == parseData(transferTx[5].toData(), 1)
-    //           .toAddress(12),
-    //           "token needs to be transfered from last proven custody");
-    //   require(parseData(transferTx[5].toData(),4).toUint(0) ==
-    //           challengeNonce[_tokenId],
-    //           "nonce needs to equal required challengeNonce");
 
-    //   //moves up root mint referecce to recipient address
-    //   tokenIdToMinter[_tokenId] = parseData(transferTx[5].toData(), 2)
-    //                               .toAddress(12);
-    //   //updates challengeNonce to next step
-    //   challengeNonce[_tokenId] += 1;
+    RLP.RLPItem[] memory transferTx = rawTxList[0].toRLPItem().toList();
+    RLP.RLPItem[] memory custodianTx = rawTxList[1].toRLPItem().toList();
+
+    //   //TODO: save on require statement by not including _tokenId in arguments
+    checkTransferTxAndCustodianTx(transferTx, custodianTx, _txMsgHashes[1]);
+    require(tokenIdToMinter[_tokenId] == parseData(transferTx[5].toData(), 1)
+            .toAddress(12),
+            "token needs to be transfered from last proven custody");
+
+    require(_tokenId == parseData(transferTx[5].toData(), 3).toUint(0),
+            "needs to refer to the same tokenId");
+
+    require(parseData(transferTx[5].toData(),4).toUint(0) ==
+            challengeNonce[_tokenId],
+            "nonce needs to equal required challengeNonce");
+
+    //moves up root mint referecce to recipient address
+    tokenIdToMinter[_tokenId] = parseData(transferTx[5].toData(), 2)
+                                .toAddress(12);
+    //updates challengeNonce to next step
+    challengeNonce[_tokenId] += 1;
+
     // }
     emit Challenge(msg.sender, _to, _tokenId, challengeNonce[_tokenId]);
   }

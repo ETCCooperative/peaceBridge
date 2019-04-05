@@ -4,7 +4,7 @@ This script simulates a user interacting with TokenContract and DepositContract
 */
 
 var tokenContractAddr = '0x366021610bF0D5EbfdC9041a7f8b152aa76E6D98';
-var depositContractAddr = '0xcBB5AeF36f6cde3e046c64EB2149BFFB59b8EFFf';
+var depositContractAddr = '0x5d6190c0f74b1f29814c9b7e1efd7412e784fd93';
 
 //------------------------------------------------------------------------------
 //Set parameters

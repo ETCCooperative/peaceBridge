@@ -15,7 +15,7 @@ const tokenHelper = require('./TokenHelper.js');
 //------------------------------------------------------------------------------
 //Set parameters
 const tokenContractAddr = '0x20dD16A7CFb58b1a61a79CC0FD014342e75C16c7';
-const depositContractAddr = '0x3bAfA5b729259E29dD5969A4ad83582a1c998F29';
+const depositContractAddr = '0x5d6190c0f74b1f29814c9b7e1efd7412e784fd93';
 
 const infuraAPI = '9744d40b99e34a57850802d4c6433ab8';
 
@@ -105,7 +105,7 @@ var web3DepositContractInstance = new web3HomeProvider.eth.Contract(depositContr
 //Interacting with contract instances
 
 
-async function challengeWithPastCustodyTest(
+async function honestChallengeWithPastCustodyTest(
     _custTokenContractInstance,
     _tokenContractInstance,  _tokenContractInstance2, 
     _tokenContractInstance3, _tokenContractInstance4,
@@ -214,12 +214,12 @@ async function challengeWithPastCustodyTest(
 
     //9. Charlie challenges using initiateChallengeWithPastCustody
     setTimeout(async function() {
-    var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
-        transferTxHash2, web3ForeignProvider)
-    var rawCustodianApprove = await helper.recreateRawTxAndMsgHash(
-        custodianApproveTxHash2, web3ForeignProvider)
+    var rawTransferFrom1 = await helper.recreateRawTxAndMsgHash(
+        transferTxHash, web3ForeignProvider)
+    var rawCustodianApprove1 = await helper.recreateRawTxAndMsgHash(
+        custodianApproveTxHash, web3ForeignProvider)
     var withdrawArgs = await helper.formBundleLengthsHashes(
-        [rawTransferFrom, rawCustodianApprove]);
+        [rawTransferFrom1, rawCustodianApprove1]);
     challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
         gasPerChallenge*gasPrice*10,
         homePublicAddr3,
@@ -231,14 +231,7 @@ async function challengeWithPastCustodyTest(
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*2)
 
 
-    // //10. Charlie transfers token to Deirdre
-    // setTimeout(async function() {
-    //     transferTxHash2 = await tokenHelper.transferCall(
-    //         foreignPublicAddr3, foreignPublicAddr4, tokenId, 2, _tokenContractInstance3);
-    // }, foreignBlockTimeDelay*9 + homeBlockTimeDelay*2)
-
 }
-
 
 
 
@@ -266,7 +259,8 @@ async function instantiateAndTest(){
     var depositContract4 = await depositHelper.instantiateContract(
         depositContractAddr, depositContractAbi, homeWallet4);
 
-    await challengeWithPastCustodyTest(
+    // await dishonestChallengeWithPastCustodyTest(
+    await honestChallengeWithPastCustodyTest(
         custTokenContract, 
         tokenContract, tokenContract2, tokenContract3, tokenContract4,
         depositContract, depositContract2, depositContract3, depositContract4
