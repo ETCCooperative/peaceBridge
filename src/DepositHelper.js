@@ -116,6 +116,18 @@ module.exports = {
     var txHash = await module.exports.getTxHash(result);
     await console.log('initiateChallengeWithPastCustody() txHash: ' + txHash);
     return txHash; 
+  },
+
+  challengeWithPastCustodyCall: async function(
+    _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes, _contractInstance
+  ){
+    var result = await _contractInstance.challengeWithPastCustody(
+      _to, _tokenId, _rawTxBundle, _txLengths, _txMsgHashes
+    )
+    var txHash = await module.exports.getTxHash(result);
+    await console.log('challengeWithPastCustody() txHash: ' + txHash);
+    return txHash; 
   }
+
 
 }

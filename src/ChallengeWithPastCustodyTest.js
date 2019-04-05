@@ -16,6 +16,8 @@ const tokenHelper = require('./TokenHelper.js');
 //Set parameters
 const tokenContractAddr = '0x20dD16A7CFb58b1a61a79CC0FD014342e75C16c7';
 const depositContractAddr = '0x92c1f6641c1D2e7389812BD2C3b7b80046c9D7Ee';
+// const depositContractAddr = '0x3bAfA5b729259E29dD5969A4ad83582a1c998F29';
+// NB: make sure custodianForeign and tokenContract are already set on the DeposittContract
 
 const infuraAPI = '9744d40b99e34a57850802d4c6433ab8';
 
@@ -176,17 +178,17 @@ async function honestChallengeWithPastCustodyTest(
             tokenId, _tokenContractInstance4)
     }, foreignBlockTimeDelay*7 + homeBlockTimeDelay)
 
-    //8. (offline) Alice and Custodian create fake offline future transfer to Deirdre at nonce 4 
+    //8. (offline) Bob and Custodian create fake offline future transfer to Deirdre at nonce 4 
     setTimeout(async function() {
         var rawWithdrawal = await helper.recreateRawTxAndMsgHash(
             withdrawalTxHash, web3ForeignProvider)
 
         // fake future transfer tx at nonce 4
         var transferData = await web3TokenContractInstance.methods.transferFrom(
-            foreignPublicAddr, foreignPublicAddr4,tokenId, 4
+            foreignPublicAddr2, foreignPublicAddr4,tokenId, 4
         ).encodeABI();
         var rawTransferFrom = await helper.generateRawTxAndMsgHash(
-            foreignPublicAddr, foreignPrivateKey,
+            foreignPublicAddr2, foreignPrivateKey2,
             tokenContractAddr, 0, transferData, web3ForeignProvider
         )
         // fake future approve tx at nonce 4
@@ -203,7 +205,7 @@ async function honestChallengeWithPastCustodyTest(
 
         
         result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
-                                homePublicAddr,
+                                homePublicAddr4,
                                 tokenId,
                                 withdrawArgs.bytes32Bundle,
                                 withdrawArgs.txLengths,
@@ -212,7 +214,7 @@ async function honestChallengeWithPastCustodyTest(
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay)
 
 
-    //9. Bob challenges using initiateChallengeWithPastCustody
+    //9. Charlie challenges using initiateChallengeWithPastCustody
     setTimeout(async function() {
     var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
         transferTxHash, web3ForeignProvider)
@@ -227,10 +229,10 @@ async function honestChallengeWithPastCustodyTest(
         withdrawArgs.bytes32Bundle,
         withdrawArgs.txLengths,
         withdrawArgs.txMsgHashes,
-        _depositContractInstance2);
+        _depositContractInstance);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*2)
 
-    //10. Alice responds to challenge using challengeWithPastCustody
+    //10. Bob responds to challenge using challengeWithPastCustody
     setTimeout(async function() {
         var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
             transferTxHash2, web3ForeignProvider)
@@ -238,15 +240,20 @@ async function honestChallengeWithPastCustodyTest(
             custodianApproveTxHash2, web3ForeignProvider)
         var withdrawArgs = await helper.formBundleLengthsHashes(
             [rawTransferFrom, rawCustodianApprove]);
-        challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
-            gasPerChallenge*gasPrice*10,
+        challengeHash = await depositHelper.challengeWithPastCustodyCall(
             homePublicAddr,
             tokenId, 
             withdrawArgs.bytes32Bundle,
             withdrawArgs.txLengths,
             withdrawArgs.txMsgHashes,
-            _depositContractInstance);
+            _depositContractInstance2);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*3)
+
+    // but he can't continue responding up to nonce 4, since there is no signed
+    // tx from Charlie to Eve. 
+
+    // so Bob won't be able to claim() at the end of the challenge period, and
+    // Charlie can claimStake().
 
 }
 
