@@ -2,8 +2,8 @@ pragma solidity ^0.4.24;
 // produced by the Solididy File Flattener (c) David Appleton 2018
 // contact : dave@akomba.com
 // released under Apache 2.0 licence
-// input  /home/yingtong/peacebridge/contracts/DepositContract.sol
-// flattened :  Monday, 25-Feb-19 08:49:59 UTC
+// input  /home/yingtong/peacebridge/solidityflattery/DepositContract.sol
+// flattened :  Friday, 05-Apr-19 05:40:40 UTC
 library SafeMath {
   function mul(uint256 a, uint256 b) internal pure returns (uint256) {
     uint256 c = a * b;
@@ -1050,23 +1050,23 @@ contract DepositContract {
     resetChallenge(_tokenId);
   }
 
-  // /*
-  // /**
-  //  * @dev For challenger to claim stake on fradulent withdraw
-  //    (challengeWithPastCustody())
-  //  * @param _tokenId uint256 Id of token on TokenContract
-  // */
-  // function claimStake(uint256 _tokenId) public {
-  //   require(challengeTime[_tokenId] != 0);
-  //   require(challengeTime[_tokenId] < now);
-  //   require(challengeNonce[_tokenId] != challengeEndNonce[_tokenId] &&
-  //                                       challengeNonce[_tokenId] != 0,
-  //           "challenge not initated/withdrawal is honest");
+  /*
+  /**
+   * @dev For challenger to claim stake on fradulent withdraw
+     (challengeWithPastCustody())
+   * @param _tokenId uint256 Id of token on TokenContract
+  */
+  function claimStake(uint256 _tokenId) public {
+    require(challengeTime[_tokenId] != 0);
+    require(challengeTime[_tokenId] < now);
+    require(challengeNonce[_tokenId] != challengeEndNonce[_tokenId] &&
+                                        challengeNonce[_tokenId] != 0,
+            "challenge not initated/withdrawal is honest");
 
-  //   challengeRecipient[_tokenId].send(challengeStake[_tokenId]);
+    challengeRecipient[_tokenId].send(challengeStake[_tokenId]);
 
-  //   resetChallenge(_tokenId);
-  // }
+    resetChallenge(_tokenId);
+  }
   
   /*
   /**
@@ -1180,40 +1180,34 @@ contract DepositContract {
     // splits bundle into individual rawTxs
     bytes[] rawTxList;
     splitTxBundle(_rawTxBundle, _txLengths, rawTxList);
-
-    RLP.RLPItem[] memory transferTx = rawTxList[0].toRLPItem().toList();
-    RLP.RLPItem[] memory custodianTx = rawTxList[1].toRLPItem().toList();
-
-    checkTransferTxAndCustodianTx(transferTx, custodianTx, _txMsgHashes[1]);
-    require(challengeAddressClaim[_tokenId] ==
-            parseData(transferTx[5].toData(), 1).toAddress(12),
-            "token needs to be transfered from last proven custody");
-    require(_tokenId == parseData(transferTx[5].toData(), 3).toUint(0),
-            "needs to refer to the same tokenId");
-
-    _to.send(challengeStake[_tokenId]);
-    resetChallenge(_tokenId);
     // //get rid of loops
     // for (uint i = 0; i < _txLengths.length; i +=2) {
     //   RLP.RLPItem[] memory transferTx = rawTxList[i].toRLPItem().toList();
     //   RLP.RLPItem[] memory custodianTx = rawTxList[i + 1].toRLPItem().toList();
-
     //   checkTransferTxAndCustodianTx(transferTx, custodianTx, _txMsgHashes[i+1]);
-    //   //TODO: save on require statement by not including _tokenId in arguments
-    //   require(_tokenId == parseData(transferTx[5].toData(), 3).toUint(0),
-    //           "needs to refer to the same tokenId");
-    //   require(tokenIdToMinter[_tokenId] == parseData(transferTx[5].toData(), 1)
-    //           .toAddress(12),
-    //           "token needs to be transfered from last proven custody");
-    //   require(parseData(transferTx[5].toData(),4).toUint(0) ==
-    //           challengeNonce[_tokenId],
-    //           "nonce needs to equal required challengeNonce");
 
-    //   //moves up root mint referecce to recipient address
-    //   tokenIdToMinter[_tokenId] = parseData(transferTx[5].toData(), 2)
-    //                               .toAddress(12);
-    //   //updates challengeNonce to next step
-    //   challengeNonce[_tokenId] += 1;
+    RLP.RLPItem[] memory transferTx = rawTxList[0].toRLPItem().toList();
+    RLP.RLPItem[] memory custodianTx = rawTxList[1].toRLPItem().toList();
+
+    //   //TODO: save on require statement by not including _tokenId in arguments
+    checkTransferTxAndCustodianTx(transferTx, custodianTx, _txMsgHashes[1]);
+    require(tokenIdToMinter[_tokenId] == parseData(transferTx[5].toData(), 1)
+            .toAddress(12),
+            "token needs to be transfered from last proven custody");
+
+    require(_tokenId == parseData(transferTx[5].toData(), 3).toUint(0),
+            "needs to refer to the same tokenId");
+
+    require(parseData(transferTx[5].toData(),4).toUint(0) ==
+            challengeNonce[_tokenId],
+            "nonce needs to equal required challengeNonce");
+
+    //moves up root mint referecce to recipient address
+    tokenIdToMinter[_tokenId] = parseData(transferTx[5].toData(), 2)
+                                .toAddress(12);
+    //updates challengeNonce to next step
+    challengeNonce[_tokenId] += 1;
+
     // }
     emit Challenge(msg.sender, _to, _tokenId, challengeNonce[_tokenId]);
   }

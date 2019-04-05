@@ -203,23 +203,23 @@ contract DepositContract {
     resetChallenge(_tokenId);
   }
 
-  // /*
-  // /**
-  //  * @dev For challenger to claim stake on fradulent withdraw
-  //    (challengeWithPastCustody())
-  //  * @param _tokenId uint256 Id of token on TokenContract
-  // */
-  // function claimStake(uint256 _tokenId) public {
-  //   require(challengeTime[_tokenId] != 0);
-  //   require(challengeTime[_tokenId] < now);
-  //   require(challengeNonce[_tokenId] != challengeEndNonce[_tokenId] &&
-  //                                       challengeNonce[_tokenId] != 0,
-  //           "challenge not initated/withdrawal is honest");
+  /*
+  /**
+   * @dev For challenger to claim stake on fradulent withdraw
+     (challengeWithPastCustody())
+   * @param _tokenId uint256 Id of token on TokenContract
+  */
+  function claimStake(uint256 _tokenId) public {
+    require(challengeTime[_tokenId] != 0);
+    require(challengeTime[_tokenId] < now);
+    require(challengeNonce[_tokenId] != challengeEndNonce[_tokenId] &&
+                                        challengeNonce[_tokenId] != 0,
+            "challenge not initated/withdrawal is honest");
 
-  //   challengeRecipient[_tokenId].send(challengeStake[_tokenId]);
+    challengeRecipient[_tokenId].send(challengeStake[_tokenId]);
 
-  //   resetChallenge(_tokenId);
-  // }
+    resetChallenge(_tokenId);
+  }
   
   /*
   /**

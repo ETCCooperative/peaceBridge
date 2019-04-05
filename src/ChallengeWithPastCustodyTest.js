@@ -15,7 +15,7 @@ const tokenHelper = require('./TokenHelper.js');
 //------------------------------------------------------------------------------
 //Set parameters
 const tokenContractAddr = '0x20dD16A7CFb58b1a61a79CC0FD014342e75C16c7';
-const depositContractAddr = '0x5d6190c0f74b1f29814c9b7e1efd7412e784fd93';
+const depositContractAddr = '0x92c1f6641c1D2e7389812BD2C3b7b80046c9D7Ee';
 
 const infuraAPI = '9744d40b99e34a57850802d4c6433ab8';
 
@@ -176,17 +176,17 @@ async function honestChallengeWithPastCustodyTest(
             tokenId, _tokenContractInstance4)
     }, foreignBlockTimeDelay*7 + homeBlockTimeDelay)
 
-    //8. (offline) Bob and Custodian create fake offline future transfer to Deirdre at nonce 4 
+    //8. (offline) Alice and Custodian create fake offline future transfer to Deirdre at nonce 4 
     setTimeout(async function() {
         var rawWithdrawal = await helper.recreateRawTxAndMsgHash(
             withdrawalTxHash, web3ForeignProvider)
 
         // fake future transfer tx at nonce 4
         var transferData = await web3TokenContractInstance.methods.transferFrom(
-            foreignPublicAddr2, foreignPublicAddr4,tokenId, 4
+            foreignPublicAddr, foreignPublicAddr4,tokenId, 4
         ).encodeABI();
         var rawTransferFrom = await helper.generateRawTxAndMsgHash(
-            foreignPublicAddr2, foreignPrivateKey2,
+            foreignPublicAddr, foreignPrivateKey,
             tokenContractAddr, 0, transferData, web3ForeignProvider
         )
         // fake future approve tx at nonce 4
@@ -203,7 +203,7 @@ async function honestChallengeWithPastCustodyTest(
 
         
         result = await depositHelper.withdrawCall(gasPerChallenge*gasPrice,
-                                homePublicAddr4,
+                                homePublicAddr,
                                 tokenId,
                                 withdrawArgs.bytes32Bundle,
                                 withdrawArgs.txLengths,
@@ -212,14 +212,14 @@ async function honestChallengeWithPastCustodyTest(
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay)
 
 
-    //9. Charlie challenges using initiateChallengeWithPastCustody
+    //9. Bob challenges using initiateChallengeWithPastCustody
     setTimeout(async function() {
-    var rawTransferFrom1 = await helper.recreateRawTxAndMsgHash(
+    var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
         transferTxHash, web3ForeignProvider)
-    var rawCustodianApprove1 = await helper.recreateRawTxAndMsgHash(
+    var rawCustodianApprove = await helper.recreateRawTxAndMsgHash(
         custodianApproveTxHash, web3ForeignProvider)
     var withdrawArgs = await helper.formBundleLengthsHashes(
-        [rawTransferFrom1, rawCustodianApprove1]);
+        [rawTransferFrom, rawCustodianApprove]);
     challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
         gasPerChallenge*gasPrice*10,
         homePublicAddr3,
@@ -227,9 +227,26 @@ async function honestChallengeWithPastCustodyTest(
         withdrawArgs.bytes32Bundle,
         withdrawArgs.txLengths,
         withdrawArgs.txMsgHashes,
-        _depositContractInstance3);
+        _depositContractInstance2);
     }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*2)
 
+    //10. Alice responds to challenge using challengeWithPastCustody
+    setTimeout(async function() {
+        var rawTransferFrom = await helper.recreateRawTxAndMsgHash(
+            transferTxHash2, web3ForeignProvider)
+        var rawCustodianApprove = await helper.recreateRawTxAndMsgHash(
+            custodianApproveTxHash2, web3ForeignProvider)
+        var withdrawArgs = await helper.formBundleLengthsHashes(
+            [rawTransferFrom, rawCustodianApprove]);
+        challengeHash = await depositHelper.initiateChallengeWithPastCustodyCall(
+            gasPerChallenge*gasPrice*10,
+            homePublicAddr,
+            tokenId, 
+            withdrawArgs.bytes32Bundle,
+            withdrawArgs.txLengths,
+            withdrawArgs.txMsgHashes,
+            _depositContractInstance);
+    }, foreignBlockTimeDelay*8 + homeBlockTimeDelay*3)
 
 }
 

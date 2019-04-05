@@ -3,7 +3,33 @@ pragma solidity ^0.4.24;
 // contact : dave@akomba.com
 // released under Apache 2.0 licence
 // input  /home/yingtong/peacebridge/solidityflattery/DepositContract.sol
-// flattened :  Friday, 05-Apr-19 04:53:23 UTC
+// flattened :  Friday, 05-Apr-19 05:40:40 UTC
+library SafeMath {
+  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a * b;
+    assert(a == 0 || c / a == b);
+    return c;
+  }
+
+  function div(uint256 a, uint256 b) internal pure returns (uint256) {
+    // assert(b > 0); // Solidity automatically throws when dividing by 0
+    uint256 c = a / b;
+    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+    return c;
+  }
+
+  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+    assert(b <= a);
+    return a - b;
+  }
+  
+  function add(uint256 a, uint256 b) internal pure returns (uint256) {
+    uint256 c = a + b;
+    assert(c >= a);
+    return c;
+  }
+}
+
 contract Ownable {
   address public owner;
 
@@ -826,32 +852,6 @@ library BytesLib {
         return success;
     }
 }
-library SafeMath {
-  function mul(uint256 a, uint256 b) internal pure returns (uint256) {
-    uint256 c = a * b;
-    assert(a == 0 || c / a == b);
-    return c;
-  }
-
-  function div(uint256 a, uint256 b) internal pure returns (uint256) {
-    // assert(b > 0); // Solidity automatically throws when dividing by 0
-    uint256 c = a / b;
-    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
-    return c;
-  }
-
-  function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-    assert(b <= a);
-    return a - b;
-  }
-  
-  function add(uint256 a, uint256 b) internal pure returns (uint256) {
-    uint256 c = a + b;
-    assert(c >= a);
-    return c;
-  }
-}
-
 contract DepositContract {
   using SafeMath for uint256;
   using RLP for RLP.RLPItem;
@@ -1050,23 +1050,23 @@ contract DepositContract {
     resetChallenge(_tokenId);
   }
 
-  // /*
-  // /**
-  //  * @dev For challenger to claim stake on fradulent withdraw
-  //    (challengeWithPastCustody())
-  //  * @param _tokenId uint256 Id of token on TokenContract
-  // */
-  // function claimStake(uint256 _tokenId) public {
-  //   require(challengeTime[_tokenId] != 0);
-  //   require(challengeTime[_tokenId] < now);
-  //   require(challengeNonce[_tokenId] != challengeEndNonce[_tokenId] &&
-  //                                       challengeNonce[_tokenId] != 0,
-  //           "challenge not initated/withdrawal is honest");
+  /*
+  /**
+   * @dev For challenger to claim stake on fradulent withdraw
+     (challengeWithPastCustody())
+   * @param _tokenId uint256 Id of token on TokenContract
+  */
+  function claimStake(uint256 _tokenId) public {
+    require(challengeTime[_tokenId] != 0);
+    require(challengeTime[_tokenId] < now);
+    require(challengeNonce[_tokenId] != challengeEndNonce[_tokenId] &&
+                                        challengeNonce[_tokenId] != 0,
+            "challenge not initated/withdrawal is honest");
 
-  //   challengeRecipient[_tokenId].send(challengeStake[_tokenId]);
+    challengeRecipient[_tokenId].send(challengeStake[_tokenId]);
 
-  //   resetChallenge(_tokenId);
-  // }
+    resetChallenge(_tokenId);
+  }
   
   /*
   /**
