@@ -27,14 +27,14 @@
     "eth-lib": "^0.2.8",
     "ethereum-tx-decoder": "^2.0.1",
     "ethers": "^3.0.29",
+    "event-stream": {
+      "version": "3.3.4"
+    },
     "rlp": "^2.2.3",
     "truffle": "^4.1.15",
     "truffle-core": "4.1.14",
     "truffle-hdwallet-provider": "0.0.5",
-    "web3": "^1.0.0-beta.51",
-    "event-stream": {
-      "version": "3.3.4"
-    }
+    "web3": "^1.0.0-beta.51"
   },
   "requires": {
     "event-stream": "~3.3.0"
