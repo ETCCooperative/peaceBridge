@@ -852,6 +852,7 @@ library BytesLib {
         return success;
     }
 }
+
 contract DepositContract {
   using SafeMath for uint256;
   using RLP for RLP.RLPItem;
@@ -917,7 +918,8 @@ contract DepositContract {
   event ChallengeResolved(uint256 tokenId);
   event Withdrawal(address indexed withdrawer,
                    uint256 indexed tokenId,
-                   uint256 stakedAmount);
+                   uint256 stakedAmount,
+                   uint256 declaredNonce);
 
   bytes4 mintSignature = 0x94bf804d;
   bytes4 withdrawSignature = 0x2e1a7d4d;
@@ -959,9 +961,9 @@ contract DepositContract {
   //mintToStake
   mapping (uint256 => uint256) challengeStake;
   //mintToEndNonce/depth
-  mapping (uint256 => uint256) challengeEndNonce;
+  mapping (uint256 => uint256) public challengeEndNonce;
   //tokenIdToNonce
-  mapping (uint256 => uint256) challengeNonce;
+  mapping (uint256 => uint256) public challengeNonce;
   //tokenIdToChallengerAddress
   mapping (uint256 => address) challenger;
 
@@ -1027,7 +1029,7 @@ contract DepositContract {
     challengeAddressClaim[_tokenId] = lastCustody;
     challengeRecipient[_tokenId] = _to;
     challengeStake[_tokenId] = msg.value;
-    emit Withdrawal(_to, _tokenId, msg.value);
+    emit Withdrawal(_to, _tokenId, msg.value, _declaredNonce);
   }
 
   /*
@@ -1207,6 +1209,9 @@ contract DepositContract {
                                 .toAddress(12);
     //updates challengeNonce to next step
     challengeNonce[_tokenId] += 1;
+
+    //sets challenge recipient (recipient of claimStake()) to _to
+    challengeRecipient[_tokenId] = _to;
 
     // }
     emit Challenge(msg.sender, _to, _tokenId, challengeNonce[_tokenId]);
@@ -1432,4 +1437,3 @@ contract DepositContract {
   }
 
 }
-
