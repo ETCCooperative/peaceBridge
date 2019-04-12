@@ -60139,7 +60139,7 @@
     }
   },
   "schemaVersion": "3.0.6",
-  "updatedAt": "2019-04-11T09:51:17.018Z",
+  "updatedAt": "2019-04-11T13:24:16.534Z",
   "devdoc": {
     "methods": {
       "approve(address,uint256)": {

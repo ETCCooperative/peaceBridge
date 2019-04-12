@@ -13,7 +13,8 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "signature": "0x445df0ac"
     },
     {
       "constant": true,
@@ -27,13 +28,15 @@
       ],
       "payable": false,
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "signature": "0x8da5cb5b"
     },
     {
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "constructor"
+      "type": "constructor",
+      "signature": "constructor"
     },
     {
       "constant": false,
@@ -47,7 +50,8 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "signature": "0xfdacd576"
     },
     {
       "constant": false,
@@ -61,7 +65,8 @@
       "outputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
-      "type": "function"
+      "type": "function",
+      "signature": "0x0900f010"
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.4.24+commit.e67f0147\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"new_address\",\"type\":\"address\"}],\"name\":\"upgrade\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"last_completed_migration\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"completed\",\"type\":\"uint256\"}],\"name\":\"setCompleted\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/user/peacebridge/contracts/dependencies/Migrations.sol\":\"Migrations\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/user/peacebridge/contracts/dependencies/Migrations.sol\":{\"keccak256\":\"0xf035f4f0ba835041bf0190ee6f5fbe344b8fe09c3f53bcd4638eff2b0ae3a228\",\"urls\":[\"bzzr://d401840858781767b934931a89162b6b5a717ebcc565d958914015942f24cdfc\"]}},\"version\":1}",
@@ -1399,10 +1404,16 @@
       "links": {},
       "address": "0x98a79b2fA9b552740c5d428eA80C9FB8C634DF3d",
       "transactionHash": "0xb78f568569f939ac421eee737419f70e334c3b834cb1a4a32754489a63cd298b"
+    },
+    "1554988883827": {
+      "events": {},
+      "links": {},
+      "address": "0x1cF6293e38eAf5cF64cDd9Ce689e7a8b8161B2Dd",
+      "transactionHash": "0xb38cdd5576a716683d96fcc5824347f40a6d3cb2c0516904ad48a8c0edc7e06f"
     }
   },
   "schemaVersion": "3.0.6",
-  "updatedAt": "2019-04-11T09:41:53.123Z",
+  "updatedAt": "2019-04-11T13:21:53.225Z",
   "devdoc": {
     "methods": {}
   },

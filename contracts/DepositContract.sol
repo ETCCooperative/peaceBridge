@@ -113,9 +113,9 @@ contract DepositContract {
   //mintToStake
   mapping (uint256 => uint256) challengeStake;
   //mintToEndNonce/depth
-  mapping (uint256 => uint256) challengeEndNonce;
+  mapping (uint256 => uint256) public challengeEndNonce;
   //tokenIdToNonce
-  mapping (uint256 => uint256) challengeNonce;
+  mapping (uint256 => uint256) public challengeNonce;
   //tokenIdToChallengerAddress
   mapping (uint256 => address) challenger;
 
