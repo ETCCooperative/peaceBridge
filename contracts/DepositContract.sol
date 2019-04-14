@@ -13,12 +13,12 @@ contract DepositContract {
   using BytesLib for bytes;
 
   string contractState = "preStaked";
-  address tokenContract;
-  address custodian;
-  address custodianForeign;
-  uint256 stakedAmount;
-  uint256 depositCap;
-  uint256 depositedAmount;
+  address public tokenContract;
+  address public custodian;
+  address public custodianForeign;
+  uint256 public stakedAmount;
+  uint256 public depositCap;
+  uint256 public depositedAmount;
   mapping (uint256 => uint256) public tokenIdToAmount;
   mapping (uint256 => address) public tokenIdToMinter;
 

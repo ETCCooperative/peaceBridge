@@ -1,5 +1,5 @@
 const HDWalletProvider = require("truffle-hdwallet-provider");
-const infuraKey = 'ce26c7d418db4e4695aaa359a1013ab2';
+const infuraKey = '73c7b6df9ad24664bb7cfdfafbec3c3d';
 // const private = require('./private.json');
 // const mnemonic = private.funds;
 const fs = require('fs');
@@ -16,14 +16,14 @@ module.exports = {
       gas: 6721975,
     },
     kovan: {
-       provider: new HDWalletProvider(mnemonic, `https://kovan.infura.io/${infuraKey}`),
+       provider: new HDWalletProvider(mnemonic, `https://kovan.infura.io/v3/${infuraKey}`),
        network_id: '*',
        gas:7000000,
        gasPrice: 10000000000, // 50 gwei, this is very high
        skipDryRun: true,
      },
     ropsten: {
-       provider: new HDWalletProvider(mnemonic, `https://ropsten.infura.io/${infuraKey}`),
+       provider: new HDWalletProvider(mnemonic, `https://ropsten.infura.io/v3/${infuraKey}`),
        network_id: '*',
        gas: 7000000,
        gasPrice: 30000000000, // 50 gwei, this is very high
@@ -31,7 +31,7 @@ module.exports = {
 
      },
     //  rinkeby: {
-    //     provider: new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/${infuraKey}`),
+    //     provider: new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`),
     //     network_id: '*',
     //     gas: 3500000,
     //     gasPrice: 5000000000, // 50 gwei, this is very high
