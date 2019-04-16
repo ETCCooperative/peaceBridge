@@ -953,7 +953,7 @@ contract DepositContract {
   }
 
   // tokenIdToTimestamp
-  mapping (uint256 => uint256) challengeTime;
+  mapping (uint256 => uint256) public challengeTime;
   // tokenIdToAddress
   mapping (uint256 => address) challengeAddressClaim;
   // tokenIdToAddress
